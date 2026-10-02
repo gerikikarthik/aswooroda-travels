@@ -1356,14 +1356,22 @@ export default function App() {
                 />
                 <button
                   onClick={() => {
-                    const match = bookings.find(b => b.id.toLowerCase() === trackerSearch.trim().toLowerCase() || b.mobile === trackerSearch.trim());
-                    if (match) {
-                      setSearchedBooking(match);
-                      showToast(`Booking ${match.id} found!`);
-                    } else {
-                      setSearchedBooking(null);
-                      showToast('❌ No matching booking request found.');
-                    }
+                    const searchValue = trackerSearch.trim().toLowerCase();
+
+const match = bookings.find(
+  (b) =>
+    String(b.id || '').toLowerCase() === searchValue ||
+    String(b.mobile || '').replace(/\D/g, '') ===
+      searchValue.replace(/\D/g, '')
+);
+  
+if (match) {
+  setSearchedBooking(match);
+  showToast(`Booking ${match.id} found!`);
+} else {
+  setSearchedBooking(null);
+  showToast('❌ No matching booking request found.');
+}
                   }}
                   className="px-6 py-3 bg-orange-600 hover:bg-orange-700 text-white font-bold text-sm rounded-xl transition"
                 >
