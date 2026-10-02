@@ -501,6 +501,13 @@ export default function App() {
     };
   }, []);
 
+  // Keep an already-open tracking result live when the owner changes its status.
+  useEffect(() => {
+    if (!searchedBooking?.id) return;
+    const latest = bookings.find(b => b.id === searchedBooking.id);
+    if (latest) setSearchedBooking(latest);
+  }, [bookings, searchedBooking?.id]);
+
   // Keep customer and owner tabs in sync when they are opened in the same browser.
   useEffect(() => {
     const onStorage = (event) => {
@@ -1447,23 +1454,91 @@ export default function App() {
                   className="flex-1 px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-sm font-bold focus:ring-2 focus:ring-orange-500 focus:outline-none"
                 />
                 <button
-                  onClick={() => {
-                    const searchValue = trackerSearch.trim().toLowerCase();
+                  onClick={async () => {
+                    const rawValue = trackerSearch.trim();
+                    const searchValue = rawValue.toLowerCase();
+                    if (!rawValue) {
+                      setSearchedBooking(null);
+                      showToast('⚠️ Enter a Booking ID or Mobile Number.');
+                      return;
+                    }
 
-const match = bookings.find(
-  (b) =>
-    String(b.id || '').toLowerCase() === searchValue ||
-    String(b.mobile || '').replace(/\D/g, '') ===
-      searchValue.replace(/\D/g, '')
-);
-  
-if (match) {
-  setSearchedBooking(match);
-  showToast(`Booking ${match.id} found!`);
-} else {
-  setSearchedBooking(null);
-  showToast('❌ No matching booking request found.');
-}
+                    // Production tracking must read from Supabase directly so it works
+                    // across Render, VS Code, mobile and different browsers/devices.
+                    if (supabaseConfigured && supabase) {
+                      let data = null;
+                      let error = null;
+
+                      if (searchValue.startsWith('ast-')) {
+                        const result = await supabase
+                          .from('bookings')
+                          .select('*')
+                          .eq('id', rawValue)
+                          .maybeSingle();
+                        data = result.data;
+                        error = result.error;
+                      } else {
+                        const mobileValue = rawValue.replace(/\D/g, '');
+                        const result = await supabase
+                          .from('bookings')
+                          .select('*')
+                          .eq('mobile', mobileValue)
+                          .order('created_at', { ascending: false })
+                          .limit(1)
+                          .maybeSingle();
+                        data = result.data;
+                        error = result.error;
+                      }
+
+                      if (error) {
+                        console.error('Supabase booking tracking failed:', error);
+                        setSearchedBooking(null);
+                        showToast(`⚠️ Booking search failed: ${error.message}`);
+                        return;
+                      }
+
+                      if (data) {
+                        const match = {
+                          id: data.id,
+                          customerName: data.customer_name || '',
+                          mobile: data.mobile || '',
+                          whatsapp: data.whatsapp || data.mobile || '',
+                          pickup: data.pickup || '',
+                          destination: data.destination || '',
+                          travelDate: data.travel_date || '',
+                          pickupTime: data.pickup_time || '',
+                          travellers: Number(data.travellers || 1),
+                          packageName: data.package_name || '',
+                          vehicleName: data.vehicle_name || '',
+                          totalPrice: data.total_price == null ? 0 : Number(data.total_price),
+                          specialNotes: data.special_notes || '',
+                          status: data.status || 'NEW',
+                          createdAt: data.created_at || new Date().toISOString()
+                        };
+                        setSearchedBooking(match);
+                        showToast(`✅ Booking ${match.id} found!`);
+                        return;
+                      }
+
+                      setSearchedBooking(null);
+                      showToast('❌ No matching booking request found in the database.');
+                      return;
+                    }
+
+                    // Offline fallback for local development without Supabase.
+                    const match = bookings.find(
+                      (b) =>
+                        String(b.id || '').toLowerCase() === searchValue ||
+                        String(b.mobile || '').replace(/\D/g, '') === rawValue.replace(/\D/g, '')
+                    );
+
+                    if (match) {
+                      setSearchedBooking(match);
+                      showToast(`Booking ${match.id} found locally.`);
+                    } else {
+                      setSearchedBooking(null);
+                      showToast('❌ No matching booking request found.');
+                    }
                   }}
                   className="px-6 py-3 bg-orange-600 hover:bg-orange-700 text-white font-bold text-sm rounded-xl transition"
                 >
