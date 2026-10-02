@@ -106,12 +106,12 @@ const IconCompass = ({ className = "w-5 h-5" }) => (
 );
 
 const DEFAULT_SETTINGS = {
-  companyName: 'ASWOORODA TRAVELS',
+  companyName: 'AASWAROODA TREKS & TRAVELS',
   tagline: 'Your Journey. Our Responsibility.',
   secondaryTagline: 'Safe. Comfortable. On Time.',
   phone: '+91 8125130488',
   whatsapp: '918125130488',
-  email: 'booking@aswoorodatravels.com',
+  email: 'aaswaroodatreksandtravels@gmail.com',
   address: 'No. 12, Main Temple Road, Near Central Station, Tirupati, AP 517501',
   googleMapsUrl: 'https://maps.google.com'
 };
@@ -221,9 +221,9 @@ const INITIAL_VEHICLES = [
 
 const DESTINATIONS = [
   { id: 'd-1', name: 'Tirupati', tag: 'Divine Abode', description: 'Home of Lord Venkateswara Temple on Seven Hills.', image: 'https://images.unsplash.com/photo-1582510003544-4d00b7f74220?auto=format&fit=crop&w=600&q=80' },
-  { id: 'd-2', name: 'Kanipakam', tag: 'Swayambu Vinayaka', description: 'Famous for the water-growing Swayambu Varasiddhi Vinayaka Swamy.', image: 'https://images.unsplash.com/photo-1600100397608-f010e423b971?auto=format&fit=crop&w=600&q=80' },
+  { id: 'd-2', name: 'Kanipakam', tag: 'Swayambu Vinayaka', description: 'Famous for the water-growing Swayambu Varasiddhi Vinayaka Swamy.', image: 'https://images.unsplash.com/photo-1582510003544-4d00b7f74220?auto=format&fit=crop&w=600&q=80' },
   { id: 'd-3', name: 'Arunachalam', tag: 'Agni Lingam', description: 'Tiruvannamalai temple of Lord Shiva and sacred Girivalam path.', image: 'https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?auto=format&fit=crop&w=600&q=80' },
-  { id: 'd-4', name: 'Kanchipuram', tag: 'City of Temples', description: 'Famous for Kamakshi Amman Temple and world-renowned silk sarees.', image: 'https://images.unsplash.com/photo-1600100397608-f010e423b971?auto=format&fit=crop&w=600&q=80' },
+  { id: 'd-4', name: 'Kanchipuram', tag: 'City of Temples', description: 'Famous for Kamakshi Amman Temple and world-renowned silk sarees.', image: 'https://images.unsplash.com/photo-1582510003544-4d00b7f74220?auto=format&fit=crop&w=600&q=80' },
   { id: 'd-5', name: 'Vellore', tag: 'Sripuram Golden Temple', description: 'Magnificent golden temple surrounded by spiritual star path.', image: 'https://images.unsplash.com/photo-1582510003544-4d00b7f74220?auto=format&fit=crop&w=600&q=80' },
   { id: 'd-6', name: 'Chennai', tag: 'Metropolitan Gateway', description: 'Marina Beach, Kapaleeshwarar Temple, and heritage culture.', image: 'https://images.unsplash.com/photo-1582510003544-4d00b7f74220?auto=format&fit=crop&w=600&q=80' },
   { id: 'd-7', name: 'Hyderabad', tag: 'City of Pearls', description: 'Charminar, Golconda Fort, Ramoji Film City, and royal cuisine.', image: 'https://images.unsplash.com/photo-1572252821143-2041ee77238b?auto=format&fit=crop&w=600&q=80' },
@@ -613,8 +613,8 @@ export default function App() {
 
   const generateWhatsAppUrl = (booking, isOwnerView = false) => {
     const text = isOwnerView
-      ? `Hello ${booking.customerName}, this is ASWOORODA TRAVELS regarding your trip request #${booking.id} (${booking.packageName || 'Custom Trip'}). We have reviewed your request!`
-      : `*NEW TRIP REQUEST - ASWOORODA TRAVELS*\n\n*Booking ID:* ${booking.id}\n*Customer:* ${booking.customerName}\n*Mobile:* ${booking.mobile}\n*WhatsApp:* ${booking.whatsapp || booking.mobile}\n*Pickup:* ${booking.pickup}\n*Destination:* ${booking.destination}\n*Date:* ${booking.travelDate} at ${booking.pickupTime}\n*Travellers:* ${booking.travellers}\n*Package:* ${booking.packageName}\n*Vehicle:* ${booking.vehicleName}\n*Estimated Price:* ₹${booking.totalPrice || 'Quotation Required'}\n*Notes:* ${booking.specialNotes || 'None'}\n\nPlease contact the customer and confirm availability.`;
+      ? `Hello ${booking.customerName}, this is AASWAROODA TREKS & TRAVELS regarding your trip request #${booking.id} (${booking.packageName || 'Custom Trip'}). We have reviewed your request!`
+      : `*NEW TRIP REQUEST - AASWAROODA TREKS & TRAVELS*\n\n*Booking ID:* ${booking.id}\n*Customer:* ${booking.customerName}\n*Mobile:* ${booking.mobile}\n*WhatsApp:* ${booking.whatsapp || booking.mobile}\n*Pickup:* ${booking.pickup}\n*Destination:* ${booking.destination}\n*Date:* ${booking.travelDate} at ${booking.pickupTime}\n*Travellers:* ${booking.travellers}\n*Package:* ${booking.packageName}\n*Vehicle:* ${booking.vehicleName}\n*Estimated Price:* ₹${booking.totalPrice || 'Quotation Required'}\n*Notes:* ${booking.specialNotes || 'None'}\n\nPlease contact the customer and confirm availability.`;
     const targetPhone = isOwnerView ? (booking.whatsapp || booking.mobile) : settings.whatsapp;
     const digits = normalizeWhatsAppNumber(targetPhone);
     return `https://wa.me/${digits}?text=${encodeURIComponent(text)}`;
@@ -634,7 +634,7 @@ export default function App() {
       const permission = await Notification.requestPermission();
       setNotificationPermission(permission);
       if (permission === 'granted') {
-        addNotification('Notifications enabled', 'ASWOORODA TRAVELS browser notifications are now enabled.', 'SYSTEM');
+        addNotification('Notifications enabled', 'AASWAROODA TREKS & TRAVELS browser notifications are now enabled.', 'SYSTEM');
         showToast('🔔 Browser notifications enabled.');
       } else { showToast('Notifications permission was not granted.'); }
     } catch { showToast('Could not enable browser notifications.'); }
@@ -794,6 +794,40 @@ export default function App() {
     );
   };
 
+  // Delete a booking from the Owner Dashboard.
+  // If Supabase is connected, only remove it from the UI after the database delete succeeds.
+  const handleDeleteBooking = async (booking) => {
+    if (!booking?.id) return;
+
+    const confirmed = window.confirm(
+      `Are you sure you want to permanently delete booking ${booking.id}?`
+    );
+    if (!confirmed) return;
+
+    if (supabaseConfigured && supabase) {
+      const { error } = await supabase
+        .from('bookings')
+        .delete()
+        .eq('id', booking.id);
+
+      if (error) {
+        console.error('Supabase booking delete failed:', error);
+        showToast(`Delete failed: ${error.message}`);
+        return;
+      }
+    }
+
+    setBookings(prev => prev.filter(item => item.id !== booking.id));
+    setNotifications(prev =>
+      prev.filter(item => !String(item.desc || '').includes(booking.id))
+    );
+    showToast(
+      supabaseConfigured
+        ? `Booking ${booking.id} deleted successfully.`
+        : `Booking ${booking.id} deleted from this browser.`
+    );
+  };
+
   const openPackageEditor = (pkg = null) => {
     const p = pkg || { name: '', duration: '1 Day', route: 'Tirupati → ', distance: '', startingPrice: 0, image: '', description: '', note: '', pricing: {}, inclusions: [], exclusions: [], itinerary: [] };
     setEditingPackage(pkg);
@@ -835,8 +869,294 @@ export default function App() {
   };
 
   return (
-    <div className="min-h-screen bg-slate-50 text-slate-800 font-sans pb-20 md:pb-0">
-      
+    <div className="aasw-site-shell min-h-screen text-slate-800 font-sans pb-20 md:pb-0 relative">
+      <style>{`
+        .aasw-site-shell { isolation: isolate; background: transparent; }
+        /* HIGH-CONTRAST TEXT: keep every section title readable over the car photo */
+        .aasw-site-shell h1,
+        .aasw-site-shell h2,
+        .aasw-site-shell h3,
+        .aasw-site-shell h4 {
+          color: #ffffff !important;
+          font-weight: 900 !important;
+          text-shadow: 0 2px 5px rgba(0,0,0,.98), 0 5px 16px rgba(0,0,0,.85);
+          letter-spacing: .015em;
+        }
+        .aasw-site-shell h2 { text-decoration-color: #fbbf24; }
+        .aasw-site-shell h1 { text-shadow: 0 3px 7px #000, 0 0 22px rgba(0,0,0,.85); }
+        .aasw-site-shell .aasw-section-title { color: #ffd166 !important; }
+        .aasw-site-shell header {
+          background: rgba(3, 12, 24, .94) !important;
+          border-color: rgba(255,255,255,.16) !important;
+          backdrop-filter: blur(12px);
+        }
+        .aasw-site-shell header button,
+        .aasw-site-shell header a,
+        .aasw-site-shell header span { text-shadow: 0 1px 3px rgba(0,0,0,.65); }
+        .aasw-site-shell header .text-slate-900 { color: #ffffff !important; }
+        .aasw-site-shell header .text-orange-600 { color: #ffd166 !important; }
+        .aasw-site-shell header .text-slate-500,
+        .aasw-site-shell header .text-slate-600 { color: #e2e8f0 !important; }
+        .aasw-site-shell header .bg-slate-100 { background: rgba(255,255,255,.12) !important; }
+        .aasw-site-shell header .hover\:bg-slate-100:hover { background: rgba(255,255,255,.16) !important; }
+        .aasw-site-shell .aasw-section-title { color: #ffd166 !important; }
+        .aasw-site-shell .aasw-readable-text { color: #fff !important; text-shadow: 0 2px 5px #000; }
+        /* Keep the cinematic car landscape visible behind the entire site, not just the hero. */
+        .aasw-site-shell::before { background-attachment: fixed; }
+        .aasw-site-shell section.bg-slate-100,
+        .aasw-site-shell section.bg-white {
+          background: rgba(4, 14, 27, .58) !important;
+          color: #f8fafc;
+          border-color: rgba(255,255,255,.12);
+          backdrop-filter: blur(2px);
+        }
+        .aasw-site-shell section.bg-slate-100 h1,
+        .aasw-site-shell section.bg-slate-100 h2,
+        .aasw-site-shell section.bg-slate-100 h3,
+        .aasw-site-shell section.bg-white h1,
+        .aasw-site-shell section.bg-white h2,
+        .aasw-site-shell section.bg-white h3 { color: #fff !important; }
+        .aasw-site-shell footer {
+          background: rgba(2, 8, 16, .86) !important;
+          backdrop-filter: blur(8px);
+          border-color: rgba(255,255,255,.12);
+        }
+        .aasw-site-shell::before {
+          content: ""; position: fixed; inset: 0; z-index: -2;
+          background: url("/aaswarooda-car-background.png") center 72% / cover no-repeat;
+          transform: translateZ(0);
+        }
+        .aasw-site-shell::after {
+          content: ""; position: fixed; inset: 0; z-index: -1; pointer-events: none;
+          background: linear-gradient(180deg, rgba(3,12,24,.42), rgba(3,12,24,.62));
+        }
+        @keyframes aaswCinematicDrive {
+          0% { transform: scale(1.02) translate3d(0, 0, 0); }
+          50% { transform: scale(1.06) translate3d(-0.4%, -0.2%, 0); }
+          100% { transform: scale(1.02) translate3d(0, 0, 0); }
+        }
+        @keyframes aaswLightSweep {
+          0% { opacity: 0.05; transform: translateX(-25%); }
+          50% { opacity: 0.24; }
+          100% { opacity: 0.05; transform: translateX(25%); }
+        }
+        .aasw-hero-car { animation: aaswCinematicDrive 24s ease-in-out infinite; will-change: transform; }
+        .aasw-light-sweep { background: linear-gradient(115deg, transparent 25%, rgba(255,190,80,.12) 48%, transparent 70%); animation: aaswLightSweep 12s ease-in-out infinite alternate; mix-blend-mode: screen; }
+        @keyframes aaswDestinationMarquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+        .aasw-destination-track { display:flex; width:max-content; animation: aaswDestinationMarquee 42s linear infinite; }
+        .aasw-destination-track:hover { animation-play-state: paused; }
+        .aasw-destination-card { width:220px; height:250px; flex:0 0 auto; }
+        @media (max-width:640px) { .aasw-destination-card { width:172px; height:218px; } .aasw-destination-track { animation-duration:34s; } }
+        @media (prefers-reduced-motion: reduce) { .aasw-destination-track { animation:none !important; } }
+        @media (prefers-reduced-motion: reduce) { .aasw-hero-car, .aasw-light-sweep { animation: none !important; } }
+        /* Homepage polish: clear visual hierarchy, balanced hero, and accessible trip planner. */
+        .aasw-site-shell .aasw-home-title { max-width: 12ch; font-size: clamp(2.55rem, 4.4vw, 4.35rem); line-height: 1.02; text-wrap: balance; }
+        .aasw-site-shell .aasw-trip-planner { background: rgba(5, 16, 31, .94) !important; border: 1px solid rgba(255, 190, 72, .58) !important; box-shadow: 0 24px 70px rgba(0,0,0,.42), inset 0 1px 0 rgba(255,255,255,.08); }
+        .aasw-site-shell .aasw-trip-planner label { color: #f8fafc !important; font-size: .72rem; letter-spacing: .07em; }
+        .aasw-site-shell .aasw-trip-planner input { min-height: 48px; }
+        .aasw-site-shell .aasw-trip-planner input[type="text"] { padding-left: 2.7rem !important; }
+        .aasw-site-shell .aasw-trip-planner input[type="text"][placeholder="Enter pickup location"] { padding-right: 7.3rem !important; }
+        .aasw-site-shell .aasw-trip-planner .relative > svg { z-index: 2; pointer-events: none; }
+        .aasw-site-shell .aasw-trip-planner button[type="submit"] { min-height: 50px; letter-spacing: .035em; box-shadow: 0 10px 26px rgba(234,88,12,.24); }
+        .aasw-site-shell .aasw-destination-card { width: 236px; height: 270px; transition: transform .25s ease, border-color .25s ease; }
+        .aasw-site-shell .aasw-destination-card:hover { transform: translateY(-4px); border-color: rgba(251,191,36,.8); }
+        .aasw-site-shell .aasw-destination-card img { background: linear-gradient(135deg,#14243a,#050b14); }
+        .aasw-site-shell .aasw-destination-card h3 { font-size: 1.2rem; line-height: 1.2; }
+        .aasw-site-shell .aasw-destination-card > div:last-child { padding: 1rem; }
+        .aasw-site-shell section:has(.aasw-destination-track) { padding-top: 2.75rem; padding-bottom: 3rem; }
+        @media (max-width: 1023px) { .aasw-site-shell .aasw-home-title { max-width: 15ch; } }
+        @media (max-width: 640px) {
+          .aasw-site-shell .aasw-home-title { font-size: clamp(2.25rem, 10vw, 3.2rem); }
+          .aasw-site-shell .aasw-trip-planner { border-radius: 1.25rem; padding: 1.15rem !important; }
+          .aasw-site-shell .aasw-destination-card { width: 190px; height: 232px; }
+          .aasw-site-shell .aasw-destination-track { animation-duration: 48s; }
+        }
+
+        /* Screenshot fixes: clear hero planner fields, icons never overlap values, and readable counter. */
+        .aasw-site-shell input[type="text"], .aasw-site-shell input[type="date"], .aasw-site-shell select { min-height: 44px; }
+        .aasw-site-shell .lg\:col-span-5 input[type="text"] { padding-left: 42px !important; padding-right: 12px !important; }
+        .aasw-site-shell .lg\:col-span-5 input[type="text"][placeholder="Enter pickup location"] { padding-right: 112px !important; }
+        .aasw-site-shell .lg\:col-span-5 input::placeholder { color: #cbd5e1 !important; }
+        .aasw-site-shell .lg\:col-span-5 label { color: #f8fafc !important; letter-spacing: .04em; }
+        .aasw-site-shell .lg\:col-span-5 .bg-slate-50 { background: #f8fafc !important; color: #0f172a !important; }
+        .aasw-site-shell .lg\:col-span-5 .bg-slate-50 span { color: #0f172a !important; }
+        .aasw-site-shell .lg\:col-span-5 button.w-7 { background: #fff !important; color: #0f172a !important; border: 1px solid #cbd5e1 !important; }
+        .aasw-site-shell .lg\:col-span-5 button.w-7 svg { color: #0f172a !important; }
+        .aasw-site-shell .aasw-destination-card img { background: #172337; }
+        .aasw-site-shell .aasw-destination-card img:not([src]), .aasw-site-shell .aasw-destination-card img[src=""] { display:none; }
+        @media (max-width: 640px) { .aasw-site-shell .lg\:col-span-5 { padding: 1.1rem !important; } .aasw-site-shell .lg\:col-span-5 .grid-cols-2 { gap: .65rem; } }
+
+        /* FIX: form controls should not appear as plain white boxes over the photo. */
+        .aasw-site-shell input:not([type="checkbox"]):not([type="radio"]),
+        .aasw-site-shell select,
+        .aasw-site-shell textarea {
+          background-color: rgba(8, 20, 36, .92) !important;
+          color: #f8fafc !important;
+          border: 1px solid rgba(251, 191, 36, .58) !important;
+          border-radius: 10px;
+          caret-color: #fbbf24;
+          color-scheme: dark;
+        }
+        .aasw-site-shell input::placeholder,
+        .aasw-site-shell textarea::placeholder { color: #cbd5e1 !important; opacity: 1; }
+        .aasw-site-shell select option { background: #0b1728; color: #f8fafc; }
+        .aasw-site-shell input:focus,
+        .aasw-site-shell select:focus,
+        .aasw-site-shell textarea:focus {
+          outline: 2px solid rgba(251, 191, 36, .75);
+          outline-offset: 1px;
+          border-color: #fbbf24 !important;
+        }
+        /* Premium Bootstrap-inspired surface system: strong contrast, tidy spacing, no dependency required. */
+        .aasw-site-shell form,
+        .aasw-site-shell .bg-white.rounded-2xl,
+        .aasw-site-shell .bg-white.rounded-3xl {
+          background: linear-gradient(145deg, rgba(10, 25, 43, .97), rgba(5, 14, 27, .94)) !important;
+          border: 1px solid rgba(255, 198, 89, .30) !important;
+          border-radius: 18px;
+          color: #f8fafc;
+          box-shadow: 0 18px 48px rgba(0,0,0,.26), inset 0 1px 0 rgba(255,255,255,.05);
+          backdrop-filter: blur(14px);
+        }
+        .aasw-site-shell form label,
+        .aasw-site-shell .bg-white.rounded-2xl label,
+        .aasw-site-shell .bg-white.rounded-3xl label { color: #f8fafc !important; font-weight: 700; }
+        .aasw-site-shell form p,
+        .aasw-site-shell form small { color: #cbd5e1 !important; }
+        /* Correct the global white-heading rule inside dark panels, including modal titles. */
+        .aasw-site-shell form h1, .aasw-site-shell form h2,
+        .aasw-site-shell form h3, .aasw-site-shell form h4,
+        .aasw-site-shell .bg-white.rounded-2xl h1,
+        .aasw-site-shell .bg-white.rounded-2xl h2,
+        .aasw-site-shell .bg-white.rounded-2xl h3,
+        .aasw-site-shell .bg-white.rounded-2xl h4,
+        .aasw-site-shell .bg-white.rounded-3xl h1,
+        .aasw-site-shell .bg-white.rounded-3xl h2,
+        .aasw-site-shell .bg-white.rounded-3xl h3,
+        .aasw-site-shell .bg-white.rounded-3xl h4 { color: #fff !important; text-shadow: 0 2px 8px rgba(0,0,0,.45); }
+        .aasw-site-shell form .text-slate-900,
+        .aasw-site-shell form .text-slate-800,
+        .aasw-site-shell form .text-slate-700,
+        .aasw-site-shell form .text-gray-900,
+        .aasw-site-shell form .text-gray-800,
+        .aasw-site-shell .bg-white.rounded-2xl .text-slate-900,
+        .aasw-site-shell .bg-white.rounded-2xl .text-slate-800,
+        .aasw-site-shell .bg-white.rounded-2xl .text-slate-700,
+        .aasw-site-shell .bg-white.rounded-3xl .text-slate-900,
+        .aasw-site-shell .bg-white.rounded-3xl .text-slate-800,
+        .aasw-site-shell .bg-white.rounded-3xl .text-slate-700 { color: #f8fafc !important; }
+        .aasw-site-shell form .text-slate-500,
+        .aasw-site-shell form .text-slate-600,
+        .aasw-site-shell .bg-white.rounded-2xl .text-slate-500,
+        .aasw-site-shell .bg-white.rounded-2xl .text-slate-600,
+        .aasw-site-shell .bg-white.rounded-3xl .text-slate-500,
+        .aasw-site-shell .bg-white.rounded-3xl .text-slate-600 { color: #cbd5e1 !important; }
+        .aasw-site-shell input:not([type="checkbox"]):not([type="radio"]),
+        .aasw-site-shell select, .aasw-site-shell textarea {
+          display: block; width: 100%; min-height: 46px; padding: .7rem .9rem;
+          background: rgba(3, 11, 22, .92) !important; color: #f8fafc !important;
+          border: 1px solid rgba(203,213,225,.35) !important; border-radius: 11px;
+          transition: border-color .18s ease, box-shadow .18s ease, background .18s ease;
+        }
+        .aasw-site-shell input:hover, .aasw-site-shell select:hover, .aasw-site-shell textarea:hover { border-color: rgba(251,191,36,.75) !important; }
+        .aasw-site-shell input:focus, .aasw-site-shell select:focus, .aasw-site-shell textarea:focus {
+          border-color: #fbbf24 !important; box-shadow: 0 0 0 4px rgba(251,191,36,.16); outline: none;
+        }
+        .aasw-site-shell input::placeholder, .aasw-site-shell textarea::placeholder { color: #aebdce !important; opacity: 1; }
+        .aasw-site-shell select option { background: #0b1728; color: #f8fafc; }
+        .aasw-site-shell button { transition: transform .18s ease, box-shadow .18s ease, filter .18s ease; }
+        .aasw-site-shell button:hover { filter: brightness(1.06); }
+        .aasw-site-shell button:active { transform: translateY(1px); }
+        .aasw-site-shell form button[type="submit"] { min-height: 48px; border-radius: 12px; font-weight: 800; letter-spacing: .01em; }
+        .aasw-site-shell input[type="checkbox"], .aasw-site-shell input[type="radio"] { accent-color: #f59e0b; }
+
+        /* HOME TRIP PLANNER: larger, friendly, easy-to-read booking controls. */
+        .aasw-site-shell .aasw-trip-planner { padding: clamp(1.35rem, 2.3vw, 2rem) !important; }
+        .aasw-site-shell .aasw-trip-planner > div:first-child { margin-bottom: 1.35rem !important; }
+        .aasw-site-shell .aasw-trip-planner > div:first-child p { font-size: .9rem !important; line-height: 1.5; }
+        .aasw-site-shell .aasw-trip-planner label { font-size: .82rem !important; font-weight: 800 !important; margin-bottom: .45rem !important; color: #fff7e6 !important; }
+        .aasw-site-shell .aasw-trip-planner input[type="text"],
+        .aasw-site-shell .aasw-trip-planner input[type="date"],
+        .aasw-site-shell .aasw-trip-planner select {
+          min-height: 54px !important; font-size: 16px !important; font-weight: 600 !important;
+          background: #fffaf0 !important; color: #142033 !important; border: 1px solid #e8c98b !important;
+          border-radius: 13px !important; caret-color: #111827 !important; color-scheme: light;
+          box-shadow: inset 0 1px 2px rgba(15,23,42,.05);
+        }
+        .aasw-site-shell .aasw-trip-planner input::placeholder { color: #687386 !important; opacity: 1 !important; font-weight: 500 !important; }
+        .aasw-site-shell .aasw-trip-planner input:focus { border-color: #f59e0b !important; box-shadow: 0 0 0 4px rgba(245,158,11,.2) !important; outline: none !important; }
+        .aasw-site-shell .aasw-trip-planner .relative > svg { color: #b45309 !important; }
+        .aasw-site-shell .aasw-trip-planner .flex.items-center.justify-between.bg-slate-50 { min-height: 54px; background: #fffaf0 !important; border-color: #e8c98b !important; border-radius: 13px !important; }
+        .aasw-site-shell .aasw-trip-planner .flex.items-center.justify-between.bg-slate-50 span { font-size: 16px !important; font-weight: 800 !important; }
+        .aasw-site-shell .aasw-trip-planner .flex.items-center.justify-between.bg-slate-50 button { width: 36px !important; height: 36px !important; border-radius: 10px !important; }
+        .aasw-site-shell .aasw-trip-planner button[type="button"] { min-height: 32px; }
+        .aasw-site-shell .aasw-trip-planner button[type="submit"] { min-height: 58px !important; font-size: 1.02rem !important; border-radius: 14px !important; }
+        .aasw-site-shell .aasw-trip-planner form { gap: 1.15rem; }
+        /* Destination + travellers alignment/readability correction */
+        .aasw-site-shell .aasw-trip-planner label { display:block !important; color:#fff7e6 !important; font-size:.9rem !important; line-height:1.35 !important; }
+        .aasw-site-shell .aasw-trip-planner input[placeholder="Where are you going?"] { padding-left:2.8rem !important; padding-right:1rem !important; width:100% !important; box-sizing:border-box !important; }
+        .aasw-site-shell .aasw-trip-planner .grid.grid-cols-2 { align-items:start !important; }
+        .aasw-site-shell .aasw-trip-planner .grid.grid-cols-2 > div { min-width:0 !important; }
+        .aasw-site-shell .aasw-trip-planner .flex.items-center.justify-between.bg-slate-50 { display:flex !important; gap:.5rem !important; padding:.45rem .55rem !important; box-sizing:border-box !important; }
+        .aasw-site-shell .aasw-trip-planner .flex.items-center.justify-between.bg-slate-50 span { white-space:nowrap !important; text-align:center !important; flex:1 1 auto !important; color:#142033 !important; }
+        .aasw-site-shell .aasw-trip-planner .flex.items-center.justify-between.bg-slate-50 button { flex:0 0 36px !important; }
+        .aasw-site-shell .aasw-trip-planner input[type="date"] { width:100% !important; min-width:0 !important; box-sizing:border-box !important; padding-left:.65rem !important; padding-right:.45rem !important; }
+        .aasw-site-shell .aasw-trip-planner select option { background: #fffaf0; color: #142033; }
+        @media (max-width: 640px) {
+          .aasw-site-shell .aasw-trip-planner { padding: 1.2rem !important; }
+          .aasw-site-shell .aasw-trip-planner input[type="text"], .aasw-site-shell .aasw-trip-planner input[type="date"] { min-height: 52px !important; font-size: 16px !important; }
+        }
+        /* CONTACT PAGE FIX: the phone/email links were inheriting pale backgrounds,
+           which made the contact details disappear against the scenic photo. */
+        .aasw-site-shell a[href^="tel:"],
+        .aasw-site-shell a[href^="mailto:"],
+        .aasw-site-shell a[href*="wa.me/"] {
+          display: flex;
+          align-items: center;
+          gap: .75rem;
+          width: 100%;
+          min-height: 48px;
+          padding: .8rem .95rem;
+          border: 1px solid rgba(255, 193, 7, .28) !important;
+          border-radius: 12px;
+          background: linear-gradient(135deg, rgba(18, 36, 57, .98), rgba(7, 18, 32, .98)) !important;
+          color: #f8fafc !important;
+          text-decoration: none !important;
+          box-shadow: 0 8px 20px rgba(0,0,0,.14);
+          overflow-wrap: anywhere;
+          transition: transform .18s ease, border-color .18s ease, background .18s ease, box-shadow .18s ease;
+        }
+        .aasw-site-shell a[href^="tel:"]:hover,
+        .aasw-site-shell a[href^="mailto:"]:hover {
+          transform: translateY(-1px);
+          border-color: rgba(255, 193, 7, .8) !important;
+          box-shadow: 0 10px 26px rgba(0,0,0,.24);
+        }
+        .aasw-site-shell a[href*="wa.me/"] {
+          background: linear-gradient(135deg, #d8fff0, #b9f6dc) !important;
+          border-color: rgba(16, 185, 129, .5) !important;
+          color: #065f46 !important;
+        }
+        .aasw-site-shell a[href^="tel:"] span,
+        .aasw-site-shell a[href^="mailto:"] span { color: #f8fafc !important; }
+        .aasw-site-shell a[href*="wa.me/"] span { color: #065f46 !important; }
+        .aasw-site-shell a[href^="mailto:"] { word-break: break-word; }
+        .aasw-site-shell .grid.grid-cols-1.md\:grid-cols-2 > div { min-width: 0; }
+        @media (max-width: 640px) {
+          .aasw-site-shell a[href^="mailto:"] { font-size: .78rem; }
+        }
+        .aasw-site-shell form input[type="checkbox"],
+        .aasw-site-shell form input[type="radio"] { accent-color: #f59e0b; }
+        .aasw-site-shell button:focus-visible,
+        .aasw-site-shell a:focus-visible { outline: 2px solid #fbbf24; outline-offset: 3px; }
+        .aasw-site-shell form button[type="submit"] { min-height: 46px; }
+        @media (max-width: 640px) {
+          .aasw-site-shell form { padding: 1rem !important; }
+          .aasw-site-shell input:not([type="checkbox"]):not([type="radio"]),
+          .aasw-site-shell select,
+          .aasw-site-shell textarea { font-size: 16px; min-height: 44px; }
+        }
+      `}</style>
       {/* Toast Notification Banner */}
       {toastMessage && (
         <div className="fixed top-5 right-5 z-50 bg-slate-900 text-white px-5 py-3 rounded-xl shadow-2xl flex items-center gap-3 border border-slate-700 animate-bounce">
@@ -850,13 +1170,15 @@ export default function App() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
           
           {/* Logo & Branding */}
-          <div className="flex items-center gap-3 cursor-pointer" onClick={() => setActiveTab('home')}>
-            <div className="w-11 h-11 bg-gradient-to-tr from-amber-500 to-orange-600 rounded-xl flex items-center justify-center text-white shadow-md shadow-orange-500/20">
-              <IconCar className="w-6 h-6" />
-            </div>
-            <div>
+          <div className="flex items-center gap-3 cursor-pointer min-w-0" onClick={() => setActiveTab('home')}>
+            <img
+              src="/aswoorooda-logo.jpeg"
+              alt="Aaswarooda Treks & Travels logo"
+              className="h-12 w-12 sm:h-14 sm:w-14 rounded-full object-cover border-2 border-amber-400 shadow-lg shadow-amber-500/20 shrink-0"
+            />
+            <div className="min-w-0">
               <span className="text-xl sm:text-2xl font-black tracking-tight text-slate-900 block leading-none">
-                ASWOORODA <span className="text-orange-600">TRAVELS</span>
+                AASWAROODA <span className="text-orange-600">TREKS &amp; TRAVELS</span>
               </span>
               <span className="text-[10px] font-semibold tracking-wider text-slate-500 uppercase block mt-1">
                 {settings.tagline}
@@ -966,14 +1288,16 @@ export default function App() {
         {activeTab === 'home' && (
           <div>
             {/* HERO BANNER SECTION */}
-            <section className="relative bg-slate-900 text-white overflow-hidden py-16 md:py-24">
-              <div className="absolute inset-0 z-0 opacity-40">
+            <section className="relative bg-slate-900/20 text-white overflow-hidden min-h-[680px] md:min-h-[650px] py-8 md:py-10 flex items-start md:items-center">
+              <div className="absolute inset-0 z-0 opacity-100">
                 <img
-                  src="https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?auto=format&fit=crop&w=2000&q=80"
-                  alt="Scenic Road Journey"
-                  className="w-full h-full object-cover"
+                  src="/aaswarooda-car-background.png"
+                  alt="Aaswarooda scenic cinematic car journey"
+                  className="aasw-hero-car w-full h-full object-cover object-[72%_center] md:object-[center_62%]"
                 />
-                <div className="absolute inset-0 bg-gradient-to-r from-slate-950 via-slate-900/80 to-transparent" />
+                <div className="absolute inset-0 bg-gradient-to-r from-slate-950/70 via-slate-900/20 to-slate-950/5" />
+                <div className="aasw-light-sweep absolute inset-0 pointer-events-none" />
+                <div className="absolute inset-x-0 bottom-0 h-40 bg-gradient-to-t from-slate-950/50 to-transparent pointer-events-none" />
               </div>
 
               <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
@@ -985,8 +1309,8 @@ export default function App() {
                     <span>Premier Travel & Cab Service</span>
                   </div>
 
-                  <h1 className="text-4xl sm:text-5xl lg:text-6xl font-black tracking-tight text-white leading-tight">
-                    ASWOORODA <span className="text-orange-500">TRAVELS</span>
+                  <h1 className="aasw-home-title text-4xl sm:text-5xl lg:text-6xl font-black tracking-tight text-white leading-tight">
+                    AASWAROODA <span className="text-orange-500">TREKS &amp; TRAVELS</span>
                   </h1>
 
                   <p className="text-xl sm:text-2xl font-medium text-orange-200">
@@ -1006,11 +1330,11 @@ export default function App() {
                 </div>
 
                 {/* TRIP PLANNER CARD */}
-                <div className="lg:col-span-5 bg-white text-slate-800 rounded-3xl p-6 sm:p-8 shadow-2xl border border-slate-100">
+                <div className="aasw-trip-planner lg:col-span-5 bg-slate-950/90 backdrop-blur-xl text-white rounded-3xl p-6 sm:p-8 shadow-2xl border border-amber-300/30">
                   <div className="flex items-center justify-between mb-6 pb-4 border-b border-slate-100">
                     <div>
-                      <h2 className="text-xl font-extrabold text-slate-900">Plan Your Trip</h2>
-                      <p className="text-xs text-slate-500">Find matching vehicles & packages instantly</p>
+                      <h2 className="text-xl font-extrabold text-white">Plan Your Trip</h2>
+                      <p className="text-xs text-slate-300">Find matching vehicles & packages instantly</p>
                     </div>
                     <span className="w-10 h-10 rounded-full bg-orange-100 text-orange-600 flex items-center justify-center font-bold">
                       <IconCompass className="w-5 h-5" />
@@ -1134,49 +1458,48 @@ export default function App() {
               </div>
             </section>
 
-            {/* POPULAR DESTINATIONS GRID */}
-            <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-              <div className="flex flex-col md:flex-row md:items-end justify-between mb-10">
-                <div>
-                  <span className="text-orange-600 text-xs font-extrabold uppercase tracking-widest block mb-1">
-                    Explore South India
-                  </span>
-                  <h2 className="text-3xl font-black text-slate-900">Popular Destinations</h2>
-                </div>
-                <button
-                  onClick={() => setActiveTab('destinations')}
-                  className="mt-4 md:mt-0 text-orange-600 font-bold text-sm hover:underline flex items-center gap-1"
-                >
-                  View All 10 Destinations →
-                </button>
-              </div>
-
-              <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4">
-                {DESTINATIONS.slice(0, 5).map((dest) => (
-                  <div
-                    key={dest.id}
-                    onClick={() => {
-                      setSearchParams(prev => ({ ...prev, destination: dest.name }));
-                      setActiveTab('packages');
-                      showToast(`Filtered for ${dest.name}`);
-                    }}
-                    className="group relative rounded-2xl overflow-hidden shadow-md cursor-pointer h-56 transform transition duration-300 hover:-translate-y-1.5 hover:shadow-xl"
-                  >
-                    <img src={dest.image} alt={dest.name} className="w-full h-full object-cover group-hover:scale-110 transition duration-500" />
-                    <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/30 to-transparent" />
-                    <div className="absolute bottom-0 left-0 right-0 p-4">
-                      <span className="text-[10px] font-bold text-orange-400 uppercase tracking-wider block">
-                        {dest.tag}
-                      </span>
-                      <h3 className="text-lg font-black text-white">{dest.name}</h3>
-                    </div>
+            {/* MOVING POPULAR DESTINATIONS CAROUSEL */}
+            <section className="relative overflow-hidden py-14 sm:py-16 bg-slate-950/40 backdrop-blur-[2px] border-y border-white/10">
+              <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-8">
+                  <div>
+                    <span className="text-orange-300 text-xs font-extrabold uppercase tracking-[0.22em] block mb-2">Explore South India</span>
+                    <h2 className="text-3xl sm:text-4xl font-black text-white drop-shadow-lg">Popular Destinations</h2>
+                    <p className="text-sm text-slate-200 mt-2">Discover your next journey with AASWAROODA.</p>
                   </div>
-                ))}
+                  <button onClick={() => setActiveTab('destinations')} className="self-start sm:self-auto text-orange-300 font-bold text-sm hover:text-white transition">View All 10 Destinations →</button>
+                </div>
               </div>
+              <div className="w-full overflow-hidden" aria-label="Moving popular destinations">
+                <div className="aasw-destination-track gap-4 px-4 sm:px-6">
+                  {[...DESTINATIONS, ...DESTINATIONS].map((dest, index) => (
+                    <button
+                      type="button"
+                      key={`${dest.id}-moving-${index}`}
+                      onClick={() => {
+                        setSearchParams(prev => ({ ...prev, destination: dest.name }));
+                        setActiveTab('packages');
+                        showToast(`Selected destination: ${dest.name}`);
+                      }}
+                      className="aasw-destination-card group relative overflow-hidden rounded-2xl text-left shadow-xl border border-white/15 bg-slate-900 focus:outline-none focus:ring-2 focus:ring-orange-400"
+                      aria-label={`Explore ${dest.name}`}
+                    >
+                      <img src={dest.image} alt={dest.name} loading="lazy" onError={(e) => { e.currentTarget.onerror = null; e.currentTarget.src = "/aaswarooda-car-background.png"; }} className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
+                      <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/25 to-transparent" />
+                      <div className="absolute inset-x-0 bottom-0 p-4">
+                        <span className="text-[10px] font-extrabold text-orange-300 uppercase tracking-wider block mb-1">{dest.tag}</span>
+                        <h3 className="text-xl font-black text-white drop-shadow-md">{dest.name}</h3>
+                        <span className="inline-flex mt-2 text-xs font-bold text-white/90 group-hover:text-orange-200 transition">Explore trip ↗</span>
+                      </div>
+                    </button>
+                  ))}
+                </div>
+              </div>
+              <p className="text-center text-[11px] text-slate-300 mt-5">Tip: hover or tap a destination to explore packages.</p>
             </section>
 
             {/* FEATURED PACKAGES */}
-            <section className="bg-slate-100 py-16">
+            <section className="bg-slate-100/60 py-16">
               <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div className="text-center max-w-2xl mx-auto mb-12">
                   <span className="text-orange-600 text-xs font-extrabold uppercase tracking-widest block mb-1">
@@ -1244,7 +1567,7 @@ export default function App() {
                 <span className="text-orange-600 text-xs font-extrabold uppercase tracking-widest block mb-1">
                   Our Commitment
                 </span>
-                <h2 className="text-3xl font-black text-slate-900">Why Choose ASWOORODA TRAVELS?</h2>
+                <h2 className="text-3xl font-black text-slate-900">Why Choose AASWAROODA TREKS & TRAVELS?</h2>
               </div>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -1407,7 +1730,7 @@ export default function App() {
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
             <div className="text-center max-w-2xl mx-auto mb-10">
               <h1 className="text-3xl font-black text-slate-900">Popular Destinations</h1>
-              <p className="text-slate-600 text-sm mt-1">Explore top pilgrimage and holiday destinations connected by ASWOORODA TRAVELS.</p>
+              <p className="text-slate-600 text-sm mt-1">Explore top pilgrimage and holiday destinations connected by AASWAROODA TREKS & TRAVELS.</p>
             </div>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -1781,7 +2104,7 @@ export default function App() {
         {activeTab === 'contact' && (
           <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
             <div className="text-center mb-10">
-              <h1 className="text-3xl font-black text-slate-900">Contact ASWOORODA TRAVELS</h1>
+              <h1 className="text-3xl font-black text-slate-900">Contact AASWAROODA TREKS & TRAVELS</h1>
               <p className="text-slate-600 text-sm mt-1">We are available 24/7 to assist with your cab bookings and tour inquiries.</p>
             </div>
 
@@ -1802,6 +2125,10 @@ export default function App() {
                       <IconPhone className="w-5 h-5 text-orange-600" />
                       <span>{settings.phone}</span>
                     </a>
+                    <a href="mailto:aaswaroodatreksandtravels@gmail.com" className="flex items-center gap-3 p-3 bg-slate-50 rounded-xl text-slate-800 font-bold hover:bg-slate-100 transition break-all">
+                      <span className="text-orange-600" aria-hidden="true">✉</span>
+                      <span>aaswaroodatreksandtravels@gmail.com</span>
+                    </a>
                     <a href={`https://wa.me/${normalizeWhatsAppNumber(settings.whatsapp)}`} target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 p-3 bg-emerald-50 text-emerald-800 rounded-xl font-bold hover:bg-emerald-100 transition">
                       <IconMessageSquare className="w-5 h-5 text-emerald-600" />
                       <span>WhatsApp Direct Message</span>
@@ -1814,7 +2141,7 @@ export default function App() {
                 <div>
                   <h3 className="text-2xl font-black mb-3">Your Journey. Our Responsibility.</h3>
                   <p className="text-slate-300 text-xs leading-relaxed mb-6">
-                    ASWOORODA TRAVELS specializes in safe outstation trips, divine pilgrimages, airport transfers, and customized tours with premium vehicle comfort.
+                    AASWAROODA TREKS & TRAVELS specializes in safe outstation trips, divine pilgrimages, airport transfers, and customized tours with premium vehicle comfort.
                   </p>
                 </div>
                 <div className="bg-white/10 p-4 rounded-2xl backdrop-blur-md border border-white/10 text-xs space-y-2">
@@ -1871,7 +2198,7 @@ export default function App() {
                 {/* Admin Header Navigation */}
                 <div className="bg-slate-900 text-white p-6 rounded-3xl shadow-xl flex flex-col md:flex-row md:items-center justify-between gap-4">
                   <div>
-                    <span className="text-xs font-bold text-orange-400 uppercase tracking-widest block">ASWOORODA TRAVELS</span>
+                    <span className="text-xs font-bold text-orange-400 uppercase tracking-widest block">AASWAROODA TREKS & TRAVELS</span>
                     <h1 className="text-2xl font-black">Owner & Admin Dashboard</h1>
                   </div>
 
@@ -1936,8 +2263,8 @@ export default function App() {
                       <span className="text-xs font-semibold text-slate-500">{bookings.length} total entries</span>
                     </div>
 
-                    <div className="overflow-x-auto">
-                      <table className="w-full text-left text-xs text-slate-700">
+                    <div className="w-full overflow-x-auto">
+                      <table className="w-full min-w-[1050px] text-left text-xs text-slate-700">
                         <thead className="bg-slate-50 uppercase text-[10px] font-black text-slate-500 tracking-wider">
                           <tr>
                             <th className="p-4">Booking ID</th>
@@ -1945,8 +2272,7 @@ export default function App() {
                             <th className="p-4">Package & Vehicle</th>
                             <th className="p-4">Route & Date</th>
                             <th className="p-4">Price</th>
-                            <th className="p-4">Status</th>
-                            <th className="p-4 text-right">Quick Actions</th>
+                            <th className="p-4 text-center min-w-[280px]">Actions</th>
                           </tr>
                         </thead>
                         <tbody className="divide-y divide-slate-100 font-semibold">
@@ -1968,37 +2294,32 @@ export default function App() {
                               <td className="p-4 font-black text-slate-900">
                                 ₹{b.totalPrice ? b.totalPrice.toLocaleString() : 'Pending'}
                               </td>
-                              <td className="p-4">
-                                <select
-                                  value={b.status}
-                                  onChange={(e) => handleUpdateBookingStatus(b.id, e.target.value)}
-                                  className="p-1.5 bg-slate-100 rounded-lg text-xs font-bold text-slate-800 border border-slate-200"
-                                >
-                                  <option value="NEW">NEW</option>
-                                  <option value="CONTACTED">CONTACTED</option>
-                                  <option value="CONFIRMED">CONFIRMED</option>
-                                  <option value="COMPLETED">COMPLETED</option>
-                                  <option value="CANCELLED">CANCELLED</option>
-                                </select>
-                              </td>
-                              <td className="p-4 text-right">
-                                <div className="flex justify-end gap-2">
+                              <td className="p-4 min-w-[280px]">
+                                <div className="flex flex-nowrap items-center justify-center gap-2 whitespace-nowrap">
                                   <a
-                                    href={`tel:${b.mobile}`}
-                                    className="p-2 bg-slate-100 hover:bg-slate-200 text-slate-800 rounded-lg"
-                                    title="Call Customer"
+                                    href={`tel:${String(b.mobile || '').replace(/[^+0-9]/g, '')}`}
+                                    className="inline-flex shrink-0 items-center justify-center min-w-[72px] px-3 py-2 rounded-lg text-xs font-bold transition-colors" style={{ backgroundColor: "#2563eb", color: "#ffffff", border: "1px solid #1d4ed8", opacity: 1 }}
+                                    title={`Call ${b.customerName}`}
                                   >
-                                    <IconPhone className="w-4 h-4 text-orange-600" />
+                                    Call
                                   </a>
                                   <a
                                     href={generateWhatsAppUrl(b, true)}
                                     target="_blank"
-                                    rel="noreferrer"
-                                    className="p-2 bg-emerald-100 hover:bg-emerald-200 text-emerald-800 rounded-lg"
-                                    title="WhatsApp Customer"
+                                    rel="noopener noreferrer"
+                                    className="inline-flex shrink-0 items-center justify-center min-w-[96px] px-3 py-2 rounded-lg text-xs font-bold transition-colors" style={{ backgroundColor: "#16a34a", color: "#ffffff", border: "1px solid #15803d", opacity: 1 }}
+                                    title={`WhatsApp ${b.customerName}`}
                                   >
-                                    <IconMessageSquare className="w-4 h-4 text-emerald-600" />
+                                    WhatsApp
                                   </a>
+                                  <button
+                                    type="button"
+                                    onClick={() => handleDeleteBooking(b)}
+                                    className="inline-flex shrink-0 items-center justify-center min-w-[72px] px-3 py-2 rounded-lg text-xs font-bold transition-colors" style={{ backgroundColor: "#dc2626", color: "#ffffff", border: "1px solid #b91c1c", opacity: 1 }}
+                                    title={`Delete booking ${b.id}`}
+                                  >
+                                    Delete
+                                  </button>
                                 </div>
                               </td>
                             </tr>
@@ -2175,7 +2496,7 @@ export default function App() {
                     <p className="text-xs text-slate-300">The SQL below is the schema reference. For automatic WhatsApp, deploy the included Edge Function and Database Webhook.</p>
 
                     <pre className="bg-slate-950 p-4 rounded-2xl text-[11px] font-mono text-emerald-400 overflow-x-auto border border-slate-800">
-{`-- ASWOORODA TRAVELS SUPABASE SCHEMA EXPORT
+{`-- AASWAROODA TREKS & TRAVELS SUPABASE SCHEMA EXPORT
 CREATE TABLE IF NOT EXISTS bookings (
   id VARCHAR(50) PRIMARY KEY,
   customer_name VARCHAR(100) NOT NULL,
@@ -2284,7 +2605,7 @@ END $$;`}
             </button>
 
             <h2 className="text-2xl font-black text-slate-900 mb-1">Complete Your Booking</h2>
-            <p className="text-xs text-slate-500 mb-6">Enter details to send trip request to ASWOORODA TRAVELS desk.</p>
+            <p className="text-xs text-slate-500 mb-6">Enter details to send trip request to AASWAROODA TREKS & TRAVELS desk.</p>
 
             <form onSubmit={handleBookingSubmit} className="space-y-4">
               <div>
@@ -2437,11 +2758,40 @@ END $$;`}
       </div>
 
       {}
+      <style>{`
+        /* Keep text readable in light booking fields, especially when the cursor enters. */
+        input:not([type="checkbox"]):not([type="radio"]),
+        textarea, select {
+          caret-color: #111827;
+        }
+        input:not([type="checkbox"]):not([type="radio"]):focus,
+        textarea:focus, select:focus {
+          color: #111827 !important;
+          caret-color: #111827 !important;
+        }
+        input::placeholder, textarea::placeholder {
+          color: #64748b !important;
+          opacity: 1;
+        }
+        input:focus::placeholder, textarea:focus::placeholder {
+          color: #64748b !important;
+        }
+        input:-webkit-autofill, input:-webkit-autofill:hover,
+        input:-webkit-autofill:focus {
+          -webkit-text-fill-color: #111827 !important;
+          caret-color: #111827 !important;
+        }
+        select option { color: #111827; background: #ffffff; }
+        @media (max-width: 640px) {
+          input, select, textarea { font-size: 16px; }
+        }
+      `}</style>
+
       <footer className="bg-slate-950 text-white border-t border-slate-800 mt-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 grid grid-cols-1 md:grid-cols-4 gap-8">
           <div>
             <span className="text-xl font-black text-white block mb-2">
-              ASWOORODA <span className="text-orange-500">TRAVELS</span>
+              AASWAROODA <span className="text-orange-500">TREKS &amp; TRAVELS</span>
             </span>
             <p className="text-xs text-slate-400 leading-relaxed mb-4">
               "{settings.tagline}"
@@ -2477,7 +2827,7 @@ END $$;`}
         </div>
 
         <div className="border-t border-slate-900 text-center text-[11px] text-slate-500 py-4">
-          © 2026 ASWOORODA TRAVELS. All Rights Reserved. General Travel & Cab Booking Services.
+          © 2026 AASWAROODA TREKS & TRAVELS. All Rights Reserved. General Travel & Cab Booking Services.
         </div>
       </footer>
 
