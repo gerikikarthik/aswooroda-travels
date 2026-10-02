@@ -106,12 +106,12 @@ const IconCompass = ({ className = "w-5 h-5" }) => (
 );
 
 const DEFAULT_SETTINGS = {
-  companyName: 'AASWAROODA TREKS & TRAVELS',
+  companyName: 'ASWAROODA TREKS & TRAVELS',
   tagline: 'Your Journey. Our Responsibility.',
   secondaryTagline: 'Safe. Comfortable. On Time.',
   phone: '+91 8125130488',
   whatsapp: '918125130488',
-  email: 'aaswaroodatreksandtravels@gmail.com',
+  email: 'aswaroodatreksandtravels@gmail.com',
   address: 'No. 12, Main Temple Road, Near Central Station, Tirupati, AP 517501',
   googleMapsUrl: 'https://maps.google.com'
 };
@@ -613,8 +613,8 @@ export default function App() {
 
   const generateWhatsAppUrl = (booking, isOwnerView = false) => {
     const text = isOwnerView
-      ? `Hello ${booking.customerName}, this is AASWAROODA TREKS & TRAVELS regarding your trip request #${booking.id} (${booking.packageName || 'Custom Trip'}). We have reviewed your request!`
-      : `*NEW TRIP REQUEST - AASWAROODA TREKS & TRAVELS*\n\n*Booking ID:* ${booking.id}\n*Customer:* ${booking.customerName}\n*Mobile:* ${booking.mobile}\n*WhatsApp:* ${booking.whatsapp || booking.mobile}\n*Pickup:* ${booking.pickup}\n*Destination:* ${booking.destination}\n*Date:* ${booking.travelDate} at ${booking.pickupTime}\n*Travellers:* ${booking.travellers}\n*Package:* ${booking.packageName}\n*Vehicle:* ${booking.vehicleName}\n*Estimated Price:* ₹${booking.totalPrice || 'Quotation Required'}\n*Notes:* ${booking.specialNotes || 'None'}\n\nPlease contact the customer and confirm availability.`;
+      ? `Hello ${booking.customerName}, this is ASWAROODA TREKS & TRAVELS regarding your trip request #${booking.id} (${booking.packageName || 'Custom Trip'}). We have reviewed your request!`
+      : `*NEW TRIP REQUEST - ASWAROODA TREKS & TRAVELS*\n\n*Booking ID:* ${booking.id}\n*Customer:* ${booking.customerName}\n*Mobile:* ${booking.mobile}\n*WhatsApp:* ${booking.whatsapp || booking.mobile}\n*Pickup:* ${booking.pickup}\n*Destination:* ${booking.destination}\n*Date:* ${booking.travelDate} at ${booking.pickupTime}\n*Travellers:* ${booking.travellers}\n*Package:* ${booking.packageName}\n*Vehicle:* ${booking.vehicleName}\n*Estimated Price:* ₹${booking.totalPrice || 'Quotation Required'}\n*Notes:* ${booking.specialNotes || 'None'}\n\nPlease contact the customer and confirm availability.`;
     const targetPhone = isOwnerView ? (booking.whatsapp || booking.mobile) : settings.whatsapp;
     const digits = normalizeWhatsAppNumber(targetPhone);
     return `https://wa.me/${digits}?text=${encodeURIComponent(text)}`;
@@ -634,7 +634,7 @@ export default function App() {
       const permission = await Notification.requestPermission();
       setNotificationPermission(permission);
       if (permission === 'granted') {
-        addNotification('Notifications enabled', 'AASWAROODA TREKS & TRAVELS browser notifications are now enabled.', 'SYSTEM');
+        addNotification('Notifications enabled', 'ASWAROODA TREKS & TRAVELS browser notifications are now enabled.', 'SYSTEM');
         showToast('🔔 Browser notifications enabled.');
       } else { showToast('Notifications permission was not granted.'); }
     } catch { showToast('Could not enable browser notifications.'); }
@@ -923,7 +923,7 @@ export default function App() {
         }
         .aasw-site-shell::before {
           content: ""; position: fixed; inset: 0; z-index: -2;
-          background: url("/aaswarooda-car-background.png") center 72% / cover no-repeat;
+          background: url("/aswarooda-car-background.png") center 72% / cover no-repeat;
           transform: translateZ(0);
         }
         .aasw-site-shell::after {
@@ -1173,12 +1173,12 @@ export default function App() {
           <div className="flex items-center gap-3 cursor-pointer min-w-0" onClick={() => setActiveTab('home')}>
             <img
               src="/aswoorooda-logo.jpeg"
-              alt="Aaswarooda Treks & Travels logo"
+              alt="ASWAROODA Treks & Travels logo"
               className="h-12 w-12 sm:h-14 sm:w-14 rounded-full object-cover border-2 border-amber-400 shadow-lg shadow-amber-500/20 shrink-0"
             />
             <div className="min-w-0">
               <span className="text-xl sm:text-2xl font-black tracking-tight text-slate-900 block leading-none">
-                AASWAROODA <span className="text-orange-600">TREKS &amp; TRAVELS</span>
+                ASWAROODA <span className="text-orange-600">TREKS &amp; TRAVELS</span>
               </span>
               <span className="text-[10px] font-semibold tracking-wider text-slate-500 uppercase block mt-1">
                 {settings.tagline}
@@ -1291,8 +1291,8 @@ export default function App() {
             <section className="relative bg-slate-900/20 text-white overflow-hidden min-h-[680px] md:min-h-[650px] py-8 md:py-10 flex items-start md:items-center">
               <div className="absolute inset-0 z-0 opacity-100">
                 <img
-                  src="/aaswarooda-car-background.png"
-                  alt="Aaswarooda scenic cinematic car journey"
+                  src="/aswarooda-car-background.png"
+                  alt="ASWAROODA scenic cinematic car journey"
                   className="aasw-hero-car w-full h-full object-cover object-[72%_center] md:object-[center_62%]"
                 />
                 <div className="absolute inset-0 bg-gradient-to-r from-slate-950/70 via-slate-900/20 to-slate-950/5" />
@@ -1310,7 +1310,7 @@ export default function App() {
                   </div>
 
                   <h1 className="aasw-home-title text-4xl sm:text-5xl lg:text-6xl font-black tracking-tight text-white leading-tight">
-                    AASWAROODA <span className="text-orange-500">TREKS &amp; TRAVELS</span>
+                    ASWAROODA <span className="text-orange-500">TREKS &amp; TRAVELS</span>
                   </h1>
 
                   <p className="text-xl sm:text-2xl font-medium text-orange-200">
@@ -1465,7 +1465,7 @@ export default function App() {
                   <div>
                     <span className="text-orange-300 text-xs font-extrabold uppercase tracking-[0.22em] block mb-2">Explore South India</span>
                     <h2 className="text-3xl sm:text-4xl font-black text-white drop-shadow-lg">Popular Destinations</h2>
-                    <p className="text-sm text-slate-200 mt-2">Discover your next journey with AASWAROODA.</p>
+                    <p className="text-sm text-slate-200 mt-2">Discover your next journey with ASWAROODA.</p>
                   </div>
                   <button onClick={() => setActiveTab('destinations')} className="self-start sm:self-auto text-orange-300 font-bold text-sm hover:text-white transition">View All 10 Destinations →</button>
                 </div>
@@ -1484,7 +1484,7 @@ export default function App() {
                       className="aasw-destination-card group relative overflow-hidden rounded-2xl text-left shadow-xl border border-white/15 bg-slate-900 focus:outline-none focus:ring-2 focus:ring-orange-400"
                       aria-label={`Explore ${dest.name}`}
                     >
-                      <img src={dest.image} alt={dest.name} loading="lazy" onError={(e) => { e.currentTarget.onerror = null; e.currentTarget.src = "/aaswarooda-car-background.png"; }} className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
+                      <img src={dest.image} alt={dest.name} loading="lazy" onError={(e) => { e.currentTarget.onerror = null; e.currentTarget.src = "/aswarooda-car-background.png"; }} className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
                       <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/25 to-transparent" />
                       <div className="absolute inset-x-0 bottom-0 p-4">
                         <span className="text-[10px] font-extrabold text-orange-300 uppercase tracking-wider block mb-1">{dest.tag}</span>
@@ -1567,7 +1567,7 @@ export default function App() {
                 <span className="text-orange-600 text-xs font-extrabold uppercase tracking-widest block mb-1">
                   Our Commitment
                 </span>
-                <h2 className="text-3xl font-black text-slate-900">Why Choose AASWAROODA TREKS & TRAVELS?</h2>
+                <h2 className="text-3xl font-black text-slate-900">Why Choose ASWAROODA TREKS & TRAVELS?</h2>
               </div>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -1730,7 +1730,7 @@ export default function App() {
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
             <div className="text-center max-w-2xl mx-auto mb-10">
               <h1 className="text-3xl font-black text-slate-900">Popular Destinations</h1>
-              <p className="text-slate-600 text-sm mt-1">Explore top pilgrimage and holiday destinations connected by AASWAROODA TREKS & TRAVELS.</p>
+              <p className="text-slate-600 text-sm mt-1">Explore top pilgrimage and holiday destinations connected by ASWAROODA TREKS & TRAVELS.</p>
             </div>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -2104,7 +2104,7 @@ export default function App() {
         {activeTab === 'contact' && (
           <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
             <div className="text-center mb-10">
-              <h1 className="text-3xl font-black text-slate-900">Contact AASWAROODA TREKS & TRAVELS</h1>
+              <h1 className="text-3xl font-black text-slate-900">Contact ASWAROODA TREKS & TRAVELS</h1>
               <p className="text-slate-600 text-sm mt-1">We are available 24/7 to assist with your cab bookings and tour inquiries.</p>
             </div>
 
@@ -2125,9 +2125,9 @@ export default function App() {
                       <IconPhone className="w-5 h-5 text-orange-600" />
                       <span>{settings.phone}</span>
                     </a>
-                    <a href="mailto:aaswaroodatreksandtravels@gmail.com" className="flex items-center gap-3 p-3 bg-slate-50 rounded-xl text-slate-800 font-bold hover:bg-slate-100 transition break-all">
+                    <a href="mailto:aswaroodatreksandtravels@gmail.com" className="flex items-center gap-3 p-3 bg-slate-50 rounded-xl text-slate-800 font-bold hover:bg-slate-100 transition break-all">
                       <span className="text-orange-600" aria-hidden="true">✉</span>
-                      <span>aaswaroodatreksandtravels@gmail.com</span>
+                      <span>aswaroodatreksandtravels@gmail.com</span>
                     </a>
                     <a href={`https://wa.me/${normalizeWhatsAppNumber(settings.whatsapp)}`} target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 p-3 bg-emerald-50 text-emerald-800 rounded-xl font-bold hover:bg-emerald-100 transition">
                       <IconMessageSquare className="w-5 h-5 text-emerald-600" />
@@ -2141,7 +2141,7 @@ export default function App() {
                 <div>
                   <h3 className="text-2xl font-black mb-3">Your Journey. Our Responsibility.</h3>
                   <p className="text-slate-300 text-xs leading-relaxed mb-6">
-                    AASWAROODA TREKS & TRAVELS specializes in safe outstation trips, divine pilgrimages, airport transfers, and customized tours with premium vehicle comfort.
+                    ASWAROODA TREKS & TRAVELS specializes in safe outstation trips, divine pilgrimages, airport transfers, and customized tours with premium vehicle comfort.
                   </p>
                 </div>
                 <div className="bg-white/10 p-4 rounded-2xl backdrop-blur-md border border-white/10 text-xs space-y-2">
@@ -2198,7 +2198,7 @@ export default function App() {
                 {/* Admin Header Navigation */}
                 <div className="bg-slate-900 text-white p-6 rounded-3xl shadow-xl flex flex-col md:flex-row md:items-center justify-between gap-4">
                   <div>
-                    <span className="text-xs font-bold text-orange-400 uppercase tracking-widest block">AASWAROODA TREKS & TRAVELS</span>
+                    <span className="text-xs font-bold text-orange-400 uppercase tracking-widest block">ASWAROODA TREKS & TRAVELS</span>
                     <h1 className="text-2xl font-black">Owner & Admin Dashboard</h1>
                   </div>
 
@@ -2496,7 +2496,7 @@ export default function App() {
                     <p className="text-xs text-slate-300">The SQL below is the schema reference. For automatic WhatsApp, deploy the included Edge Function and Database Webhook.</p>
 
                     <pre className="bg-slate-950 p-4 rounded-2xl text-[11px] font-mono text-emerald-400 overflow-x-auto border border-slate-800">
-{`-- AASWAROODA TREKS & TRAVELS SUPABASE SCHEMA EXPORT
+{`-- ASWAROODA TREKS & TRAVELS SUPABASE SCHEMA EXPORT
 CREATE TABLE IF NOT EXISTS bookings (
   id VARCHAR(50) PRIMARY KEY,
   customer_name VARCHAR(100) NOT NULL,
@@ -2605,7 +2605,7 @@ END $$;`}
             </button>
 
             <h2 className="text-2xl font-black text-slate-900 mb-1">Complete Your Booking</h2>
-            <p className="text-xs text-slate-500 mb-6">Enter details to send trip request to AASWAROODA TREKS & TRAVELS desk.</p>
+            <p className="text-xs text-slate-500 mb-6">Enter details to send trip request to ASWAROODA TREKS & TRAVELS desk.</p>
 
             <form onSubmit={handleBookingSubmit} className="space-y-4">
               <div>
@@ -2791,7 +2791,7 @@ END $$;`}
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 grid grid-cols-1 md:grid-cols-4 gap-8">
           <div>
             <span className="text-xl font-black text-white block mb-2">
-              AASWAROODA <span className="text-orange-500">TREKS &amp; TRAVELS</span>
+              ASWAROODA <span className="text-orange-500">TREKS &amp; TRAVELS</span>
             </span>
             <p className="text-xs text-slate-400 leading-relaxed mb-4">
               "{settings.tagline}"
@@ -2827,7 +2827,7 @@ END $$;`}
         </div>
 
         <div className="border-t border-slate-900 text-center text-[11px] text-slate-500 py-4">
-          © 2026 AASWAROODA TREKS & TRAVELS. All Rights Reserved. General Travel & Cab Booking Services.
+          © 2026 ASWAROODA TREKS & TRAVELS. All Rights Reserved. General Travel & Cab Booking Services.
         </div>
       </footer>
 
