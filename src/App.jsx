@@ -409,6 +409,98 @@ export default function App() {
     return () => { cancelled = true; };
   }, []);
 
+  // Load the real booking list from Supabase and keep it live across devices/tabs.
+  // This is the main customer -> Owner Dashboard realtime bridge.
+  useEffect(() => {
+    if (!supabaseConfigured || !supabase) return;
+
+    let cancelled = false;
+
+    const mapBookingRow = (b) => ({
+      id: b.id,
+      customerName: b.customer_name || '',
+      mobile: b.mobile || '',
+      whatsapp: b.whatsapp || b.mobile || '',
+      pickup: b.pickup || '',
+      destination: b.destination || '',
+      travelDate: b.travel_date || '',
+      pickupTime: b.pickup_time || '',
+      travellers: Number(b.travellers || 1),
+      packageName: b.package_name || '',
+      vehicleName: b.vehicle_name || '',
+      totalPrice: b.total_price == null ? 0 : Number(b.total_price),
+      specialNotes: b.special_notes || '',
+      status: b.status || 'NEW',
+      createdAt: b.created_at || new Date().toISOString()
+    });
+
+    const loadBookings = async () => {
+      const { data, error } = await supabase
+        .from('bookings')
+        .select('*')
+        .order('created_at', { ascending: false });
+
+      if (cancelled) return;
+      if (error) {
+        console.error('Supabase booking load failed:', error);
+        return;
+      }
+      if (data) setBookings(data.map(mapBookingRow));
+    };
+
+    loadBookings();
+
+    const channel = supabase
+      .channel('aswooroda-bookings-realtime')
+      .on(
+        'postgres_changes',
+        { event: '*', schema: 'public', table: 'bookings' },
+        (payload) => {
+          if (cancelled) return;
+
+          if (payload.eventType === 'INSERT' && payload.new) {
+            const booking = mapBookingRow(payload.new);
+            setBookings(prev => [booking, ...prev.filter(b => b.id !== booking.id)]);
+            setNotifications(prev => {
+              const alreadyExists = prev.some(n => String(n.desc || '').includes(booking.id));
+              if (alreadyExists) return prev;
+              const item = {
+                id: Date.now(),
+                title: `New booking ${booking.id}`,
+                desc: `${booking.customerName} requested ${booking.packageName || 'a trip'} for ${booking.travelDate}.`,
+                type: 'BOOKING',
+                unread: true,
+                createdAt: new Date().toISOString()
+              };
+              return [item, ...prev].slice(0, 100);
+            });
+          }
+
+          if (payload.eventType === 'UPDATE' && payload.new) {
+            const booking = mapBookingRow(payload.new);
+            setBookings(prev => {
+              const exists = prev.some(b => b.id === booking.id);
+              return exists
+                ? prev.map(b => b.id === booking.id ? booking : b)
+                : [booking, ...prev];
+            });
+          }
+
+          if (payload.eventType === 'DELETE' && payload.old) {
+            setBookings(prev => prev.filter(b => b.id !== payload.old.id));
+          }
+        }
+      )
+      .subscribe((status) => {
+        if (status === 'CHANNEL_ERROR') console.error('Supabase bookings realtime channel error');
+      });
+
+    return () => {
+      cancelled = true;
+      supabase.removeChannel(channel);
+    };
+  }, []);
+
   // Keep customer and owner tabs in sync when they are opened in the same browser.
   useEffect(() => {
     const onStorage = (event) => {
@@ -651,7 +743,7 @@ export default function App() {
       }
     }
 
-    setBookings([newBooking, ...bookings]);
+    setBookings(prev => [newBooking, ...prev.filter(b => b.id !== newBooking.id)]);
     setConfirmedBooking(newBooking);
     showToast(supabaseConfigured
       ? '🚀 Custom Trip Request Sent! Owner WhatsApp notification will be sent automatically.'
@@ -2029,8 +2121,28 @@ CREATE TABLE IF NOT EXISTS bookings (
 
 -- Row Level Security
 ALTER TABLE bookings ENABLE ROW LEVEL SECURITY;
+
+DROP POLICY IF EXISTS "Public Insert" ON bookings;
 CREATE POLICY "Public Insert" ON bookings FOR INSERT WITH CHECK (true);
-CREATE POLICY "Public Select Own" ON bookings FOR SELECT USING (true);`}
+
+DROP POLICY IF EXISTS "Public Select Own" ON bookings;
+CREATE POLICY "Public Select Own" ON bookings FOR SELECT USING (true);
+
+-- REQUIRED: enable Supabase Realtime for live Owner Dashboard updates
+ALTER TABLE bookings REPLICA IDENTITY FULL;
+
+DO $$
+BEGIN
+  IF NOT EXISTS (
+    SELECT 1
+    FROM pg_publication_tables
+    WHERE pubname = 'supabase_realtime'
+      AND schemaname = 'public'
+      AND tablename = 'bookings'
+  ) THEN
+    ALTER PUBLICATION supabase_realtime ADD TABLE public.bookings;
+  END IF;
+END $$;`}
                     </pre>
                   </div>
                 )}
