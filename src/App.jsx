@@ -620,11 +620,26 @@ export default function App() {
               const item = {
                 id: Date.now(),
                 title: `New booking ${booking.id}`,
-                desc: `${booking.customerName} requested ${booking.packageName || 'a trip'} for ${booking.travelDate}.`,
+                desc: `${booking.customerName} • ${booking.pickup} → ${booking.destination} • ${booking.travelDate}`,
                 type: 'BOOKING',
+                bookingId: booking.id,
                 unread: true,
                 createdAt: new Date().toISOString()
               };
+              if (typeof Notification !== 'undefined' && Notification.permission === 'granted') {
+                try {
+                  const browserNotification = new Notification(`New booking ${booking.id}`, {
+                    body: `${booking.customerName} • ${booking.pickup} → ${booking.destination} • ${booking.travelDate}`,
+                    icon: '/icon-192.png',
+                    tag: `booking-${booking.id}`
+                  });
+                  browserNotification.onclick = () => {
+                    window.focus();
+                    window.open(generateWhatsAppUrl(booking, true), '_blank', 'noopener,noreferrer');
+                    browserNotification.close();
+                  };
+                } catch {}
+              }
               return [item, ...prev].slice(0, 100);
             });
           }
@@ -795,21 +810,62 @@ export default function App() {
 
   const normalizeWhatsAppNumber = (value) => String(value || '').replace(/\D/g, '');
 
+  const buildOwnerWhatsAppMessage = (booking) => `*ASWAROODA TREKS & TRAVELS - TRIP BOOKING REQUEST*\n\n*Booking ID:* ${booking.id}\n*Customer:* ${booking.customerName}\n*Mobile:* ${booking.mobile}\n*WhatsApp:* ${booking.whatsapp || booking.mobile}\n*Pickup:* ${booking.pickup}\n*Destination:* ${booking.destination}\n*Travel Date:* ${booking.travelDate}\n*Pickup Time:* ${booking.pickupTime}\n*Travellers:* ${booking.travellers}\n*Package:* ${booking.packageName || 'Custom Trip'}\n*Vehicle:* ${booking.vehicleName || 'Not selected'}\n*Estimated Price:* ₹${booking.totalPrice || 'Quotation Required'}\n*Notes:* ${booking.specialNotes || 'None'}\n\nPlease contact the customer regarding this exact trip booking request.`;
+
+  const buildCustomerConfirmationMessage = (booking) => `*ASWAROODA TREKS & TRAVELS - BOOKING CONFIRMED*\n\nHello ${booking.customerName || 'Customer'},\n\nYour trip booking has been *CONFIRMED* by ASWAROODA TREKS & TRAVELS.\n\n*Booking ID:* ${booking.id}\n*Pickup:* ${booking.pickup}\n*Destination:* ${booking.destination}\n*Travel Date:* ${booking.travelDate}\n*Pickup Time:* ${booking.pickupTime || 'As discussed'}\n*Travellers:* ${booking.travellers}\n*Package:* ${booking.packageName || 'Custom Trip'}\n*Vehicle:* ${booking.vehicleName || 'To be confirmed'}\n*Price:* ₹${booking.totalPrice || 'Quotation Required'}\n*Notes:* ${booking.specialNotes || 'None'}\n\nThank you for booking with ASWAROODA TREKS & TRAVELS. Please keep your Booking ID *${booking.id}* for tracking your trip.`;
+
+  const generateCustomerConfirmationWhatsAppUrl = (booking) => {
+    const digits = normalizeWhatsAppNumber(booking?.whatsapp || booking?.mobile);
+    return `https://wa.me/${digits}?text=${encodeURIComponent(buildCustomerConfirmationMessage(booking))}`;
+  };
+
   const generateWhatsAppUrl = (booking, isOwnerView = false) => {
     const text = isOwnerView
-      ? `Hello ${booking.customerName}, this is ASWAROODA TREKS & TRAVELS regarding your trip request #${booking.id} (${booking.packageName || 'Custom Trip'}). We have reviewed your request!`
+      ? buildOwnerWhatsAppMessage(booking)
       : `*NEW TRIP REQUEST - ASWAROODA TREKS & TRAVELS*\n\n*Booking ID:* ${booking.id}\n*Customer:* ${booking.customerName}\n*Mobile:* ${booking.mobile}\n*WhatsApp:* ${booking.whatsapp || booking.mobile}\n*Pickup:* ${booking.pickup}\n*Destination:* ${booking.destination}\n*Date:* ${booking.travelDate} at ${booking.pickupTime}\n*Travellers:* ${booking.travellers}\n*Package:* ${booking.packageName}\n*Vehicle:* ${booking.vehicleName}\n*Estimated Price:* ₹${booking.totalPrice || 'Quotation Required'}\n*Notes:* ${booking.specialNotes || 'None'}\n\nPlease contact the customer and confirm availability.`;
     const targetPhone = isOwnerView ? (booking.whatsapp || booking.mobile) : settings.whatsapp;
     const digits = normalizeWhatsAppNumber(targetPhone);
     return `https://wa.me/${digits}?text=${encodeURIComponent(text)}`;
   };
 
-  const addNotification = (title, desc, type = 'BOOKING') => {
-    const item = { id: Date.now(), title, desc, type, unread: true, createdAt: new Date().toISOString() };
+  const addNotification = (title, desc, type = 'BOOKING', booking = null) => {
+    const item = {
+      id: Date.now(),
+      title,
+      desc,
+      type,
+      bookingId: booking?.id || null,
+      unread: true,
+      createdAt: new Date().toISOString()
+    };
     setNotifications(prev => [item, ...prev].slice(0, 100));
     if (typeof Notification !== 'undefined' && Notification.permission === 'granted') {
-      try { new Notification(title, { body: desc, icon: '/icon-192.png' }); } catch {}
+      try {
+        const browserNotification = new Notification(title, {
+          body: booking ? `${booking.customerName} • ${booking.pickup} → ${booking.destination} • ${booking.travelDate}` : desc,
+          icon: '/icon-192.png',
+          tag: booking ? `booking-${booking.id}` : undefined
+        });
+        if (booking) {
+          browserNotification.onclick = () => {
+            window.focus();
+            window.open(generateWhatsAppUrl(booking, true), '_blank', 'noopener,noreferrer');
+            browserNotification.close();
+          };
+        }
+      } catch {}
     }
+  };
+
+  const openBookingWhatsAppFromNotification = (notification) => {
+    if (!notification?.bookingId) return;
+    const booking = bookings.find(item => String(item.id) === String(notification.bookingId));
+    if (!booking) {
+      showToast('Booking details are not loaded yet. Please refresh the dashboard.');
+      return;
+    }
+    setNotifications(prev => prev.map(item => item.id === notification.id ? { ...item, unread: false } : item));
+    window.open(generateWhatsAppUrl(booking, true), '_blank', 'noopener,noreferrer');
   };
 
   const enableBrowserNotifications = async () => {
@@ -818,8 +874,7 @@ export default function App() {
       const permission = await Notification.requestPermission();
       setNotificationPermission(permission);
       if (permission === 'granted') {
-        addNotification('Notifications enabled', 'ASWAROODA TREKS & TRAVELS browser notifications are now enabled.', 'SYSTEM');
-        showToast('🔔 Browser notifications enabled.');
+        showToast('🔔 Browser notifications enabled. New booking alerts will open the exact trip WhatsApp message.');
       } else { showToast('Notifications permission was not granted.'); }
     } catch { showToast('Could not enable browser notifications.'); }
   };
@@ -882,8 +937,9 @@ export default function App() {
     setBookings(prev => [newBooking, ...prev]);
     addNotification(
       `New booking ${newId}`,
-      `${newBooking.customerName} requested ${newBooking.packageName} for ${newBooking.travelDate}.`,
-      'BOOKING'
+      `${newBooking.customerName} • ${newBooking.pickup} → ${newBooking.destination} • ${newBooking.travelDate}`,
+      'BOOKING',
+      newBooking
     );
     setConfirmedBooking(newBooking);
     setBookingModalOpen(false);
@@ -975,12 +1031,24 @@ export default function App() {
       }
     }
 
-    setBookings(prev => prev.map(b => b.id === id ? { ...b, status: newStatus } : b));
-    addNotification(`Booking ${id} → ${newStatus}`, `${booking.customerName} / ${booking.packageName}`, 'STATUS');
-    showToast(supabaseConfigured
-      ? `✅ ${id} updated. Customer WhatsApp notification will be sent automatically.`
-      : `Updated ${id} status to ${newStatus}`
-    );
+    const updatedBooking = { ...booking, status: newStatus };
+    setBookings(prev => prev.map(b => b.id === id ? updatedBooking : b));
+
+    if (newStatus === 'CONFIRMED') {
+      addNotification(
+        `Booking ${id} CONFIRMED`,
+        `${booking.customerName} • ${booking.pickup} → ${booking.destination} • Confirmation ready to send to customer.`,
+        'CONFIRMATION',
+        updatedBooking
+      );
+      showToast(`✅ ${id} confirmed. Click “Send Confirmation” to send the exact booked trip details to the customer WhatsApp.`);
+    } else {
+      addNotification(`Booking ${id} → ${newStatus}`, `${booking.customerName} / ${booking.packageName}`, 'STATUS', updatedBooking);
+      showToast(supabaseConfigured
+        ? `✅ ${id} updated to ${newStatus}.`
+        : `Updated ${id} status to ${newStatus}`
+      );
+    }
   };
 
   // Delete a booking from the Owner Dashboard.
@@ -2668,6 +2736,42 @@ export default function App() {
                   <div><div className="font-bold text-sm">Owner Notifications</div><div className="text-[11px] text-slate-300">{notifications.filter(n => n.unread).length} unread · Browser permission: {notificationPermission}</div></div>
                   <div className="flex gap-2"><button onClick={enableBrowserNotifications} className="px-3 py-2 bg-amber-500 text-slate-950 rounded-lg text-xs font-extrabold">Enable Chrome Notifications</button><button onClick={() => setNotifications(prev => prev.map(n => ({...n,unread:false})))} className="px-3 py-2 bg-slate-800 rounded-lg text-xs font-bold">Mark Read</button></div>
                 </div>
+
+                {notifications.length > 0 && (
+                  <div className="mb-5 bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
+                    <div className="px-5 py-4 border-b border-slate-100 flex items-center justify-between">
+                      <div>
+                        <div className="font-extrabold text-slate-900">Recent Owner Notifications</div>
+                        <div className="text-[11px] text-slate-500">Click a booking notification to open WhatsApp with the exact trip details.</div>
+                      </div>
+                    </div>
+                    <div className="divide-y divide-slate-100">
+                      {notifications.slice(0, 10).map(notification => (
+                        <div key={notification.id} className={`p-4 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 ${notification.unread ? 'bg-amber-50/60' : 'bg-white'}`}>
+                          <div className="min-w-0">
+                            <div className="flex items-center gap-2">
+                              {notification.unread && <span className="w-2 h-2 rounded-full bg-orange-500 shrink-0" />}
+                              <div className="font-bold text-sm text-slate-900">{notification.title}</div>
+                            </div>
+                            <div className="text-xs text-slate-600 mt-1">{notification.desc}</div>
+                          </div>
+                          {notification.type === 'BOOKING' && notification.bookingId ? (
+                            <button type="button" onClick={() => openBookingWhatsAppFromNotification(notification)} className="shrink-0 inline-flex items-center justify-center px-4 py-2 rounded-lg text-xs font-extrabold text-white bg-green-600 hover:bg-green-700">WhatsApp Trip</button>
+                          ) : notification.type === 'CONFIRMATION' && notification.bookingId ? (
+                            <button type="button" onClick={() => {
+                              const booking = bookings.find(item => String(item.id) === String(notification.bookingId));
+                              if (!booking) { showToast('Booking details are not loaded yet. Please refresh the dashboard.'); return; }
+                              setNotifications(prev => prev.map(item => item.id === notification.id ? { ...item, unread: false } : item));
+                              window.open(generateCustomerConfirmationWhatsAppUrl(booking), '_blank', 'noopener,noreferrer');
+                            }} className="shrink-0 inline-flex items-center justify-center px-4 py-2 rounded-lg text-xs font-extrabold text-white bg-green-600 hover:bg-green-700">Send Confirmation</button>
+                          ) : (
+                            <span className="text-[10px] font-bold text-slate-400">{notification.type}</span>
+                          )}
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
 
                 {/* Dashboard Key Metrics */}
                 <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
