@@ -371,6 +371,7 @@ export default function App() {
   // Booking Form Fields
   const [formData, setFormData] = useState({
     customerName: '',
+    email: '',
     mobile: '',
     whatsapp: '',
     pickup: 'Tirupati Railway Station',
@@ -572,6 +573,7 @@ export default function App() {
     const mapBookingRow = (b) => ({
       id: b.id,
       customerName: b.customer_name || '',
+      email: b.customer_email || '',
       mobile: b.mobile || '',
       whatsapp: b.whatsapp || b.mobile || '',
       pickup: b.pickup || '',
@@ -812,61 +814,26 @@ export default function App() {
 
   const buildOwnerWhatsAppMessage = (booking) => `*ASWAROODA TREKS & TRAVELS - TRIP BOOKING REQUEST*\n\n*Booking ID:* ${booking.id}\n*Customer:* ${booking.customerName}\n*Mobile:* ${booking.mobile}\n*WhatsApp:* ${booking.whatsapp || booking.mobile}\n*Pickup:* ${booking.pickup}\n*Destination:* ${booking.destination}\n*Travel Date:* ${booking.travelDate}\n*Pickup Time:* ${booking.pickupTime}\n*Travellers:* ${booking.travellers}\n*Package:* ${booking.packageName || 'Custom Trip'}\n*Vehicle:* ${booking.vehicleName || 'Not selected'}\n*Estimated Price:* ₹${booking.totalPrice || 'Quotation Required'}\n*Notes:* ${booking.specialNotes || 'None'}\n\nPlease contact the customer regarding this exact trip booking request.`;
 
-  const CUSTOMER_STATUS_TEXT = {
-    NEW: {
-      title: 'TRIP REQUEST RECEIVED',
-      intro: 'We have received your trip request and it is currently being reviewed by our team.',
-      closing: 'We will update you once the owner reviews your request.'
-    },
-    ACCEPTED: {
-      title: 'TRIP REQUEST ACCEPTED',
-      intro: 'Your trip request has been accepted by ASWAROODA TREKS & TRAVELS.',
-      closing: 'Our team will proceed with the next booking steps.'
-    },
-    CONFIRMED: {
-      title: 'TRIP BOOKING CONFIRMED',
-      intro: 'Your trip booking has been confirmed by ASWAROODA TREKS & TRAVELS.',
-      closing: 'Your booked trip details are confirmed. Please keep your Booking ID for tracking.'
-    },
-    PAID: {
-      title: 'PAYMENT RECEIVED',
-      intro: 'Your payment status has been updated to PAID by ASWAROODA TREKS & TRAVELS.',
-      closing: 'Your payment has been marked as received. Please keep your Booking ID for future reference.'
-    },
-    ON_TRIP: {
-      title: 'TRIP IS ONGOING',
-      intro: 'Your trip is now marked as ON TRIP by ASWAROODA TREKS & TRAVELS.',
-      closing: 'Have a safe and pleasant journey with ASWAROODA TREKS & TRAVELS.'
-    },
-    COMPLETED: {
-      title: 'TRIP COMPLETED',
-      intro: 'Your trip has been marked as COMPLETED by ASWAROODA TREKS & TRAVELS.',
-      closing: 'Thank you for travelling with ASWAROODA TREKS & TRAVELS.'
-    },
-    CANCELLED: {
-      title: 'TRIP BOOKING CANCELLED',
-      intro: 'Your trip booking has been marked as CANCELLED by ASWAROODA TREKS & TRAVELS.',
-      closing: 'If you need clarification about the cancellation, please contact ASWAROODA TREKS & TRAVELS.'
-    }
+  const STATUS_MESSAGE_INTROS = {
+    NEW: 'Your booking request has been received by ASWAROODA TREKS & TRAVELS.',
+    ACCEPTED: 'Your booking has been accepted by ASWAROODA TREKS & TRAVELS.',
+    CONFIRMED: 'Your trip booking has been confirmed by ASWAROODA TREKS & TRAVELS.',
+    PAID: 'Your booking payment status has been marked as PAID by ASWAROODA TREKS & TRAVELS.',
+    ON_TRIP: 'Your trip is now marked ON TRIP by ASWAROODA TREKS & TRAVELS.',
+    COMPLETED: 'Your trip has been marked COMPLETED by ASWAROODA TREKS & TRAVELS.',
+    CANCELLED: 'Your booking has been marked CANCELLED by ASWAROODA TREKS & TRAVELS.'
   };
 
-  const buildCustomerStatusMessage = (booking, status = booking?.status || 'NEW') => {
-    const normalizedStatus = String(status || 'NEW').toUpperCase();
-    const statusInfo = CUSTOMER_STATUS_TEXT[normalizedStatus] || CUSTOMER_STATUS_TEXT.NEW;
-    const customerName = booking?.customerName || 'Customer';
-    const packageName = booking?.packageName || 'Custom Trip';
-    const vehicleName = booking?.vehicleName || 'To be confirmed';
-    const price = booking?.totalPrice ? `₹${booking.totalPrice}` : 'Quotation Required';
-
-    return `Hello ${customerName}, this is ASWAROODA TREKS & TRAVELS regarding your trip request #${booking?.id || 'N/A'} (${packageName}).\n\n${statusInfo.intro}\n\n*BOOKING DETAILS*\n*Booking ID:* ${booking?.id || 'N/A'}\n*Status:* ${normalizedStatus}\n*Pickup:* ${booking?.pickup || 'Not provided'}\n*Destination:* ${booking?.destination || 'Not provided'}\n*Travel Date:* ${booking?.travelDate || 'Not provided'}\n*Pickup Time:* ${booking?.pickupTime || 'As discussed'}\n*Travellers:* ${booking?.travellers || 'Not provided'}\n*Package:* ${packageName}\n*Vehicle:* ${vehicleName}\n*Price:* ${price}\n*Notes:* ${booking?.specialNotes || 'None'}\n\n${statusInfo.closing}\n\nThank you,\n*ASWAROODA TREKS & TRAVELS*`;
+  const buildCustomerStatusMessage = (booking, status) => {
+    const safeStatus = status || booking?.status || 'NEW';
+    return `*ASWAROODA TREKS & TRAVELS - BOOKING UPDATE*\n\nHello ${booking.customerName || 'Customer'},\n\n${STATUS_MESSAGE_INTROS[safeStatus] || `Your booking status is now ${safeStatus}.`}\n\n*STATUS:* ${safeStatus}\n*Booking ID:* ${booking.id}\n*Customer:* ${booking.customerName || 'Customer'}\n*Mobile:* ${booking.mobile || 'Not provided'}\n*Pickup:* ${booking.pickup || 'Not provided'}\n*Destination:* ${booking.destination || 'Not provided'}\n*Travel Date:* ${booking.travelDate || 'Not provided'}\n*Pickup Time:* ${booking.pickupTime || 'As discussed'}\n*Travellers:* ${booking.travellers || 1}\n*Package:* ${booking.packageName || 'Custom Trip'}\n*Vehicle:* ${booking.vehicleName || 'To be confirmed'}\n*Price:* ₹${booking.totalPrice || 'Quotation Required'}\n*Notes:* ${booking.specialNotes || 'None'}\n\nPlease keep your Booking ID *${booking.id}* for tracking your trip.\n\nThank you,\n*ASWAROODA TREKS & TRAVELS*`;
   };
 
-  const generateCustomerStatusWhatsAppUrl = (booking, status = booking?.status || 'NEW') => {
+  const generateCustomerStatusWhatsAppUrl = (booking, status) => {
     const digits = normalizeWhatsAppNumber(booking?.whatsapp || booking?.mobile);
     return `https://wa.me/${digits}?text=${encodeURIComponent(buildCustomerStatusMessage(booking, status))}`;
   };
 
-  // Backward-compatible helper used by existing confirmation UI.
   const buildCustomerConfirmationMessage = (booking) => buildCustomerStatusMessage(booking, 'CONFIRMED');
   const generateCustomerConfirmationWhatsAppUrl = (booking) => generateCustomerStatusWhatsAppUrl(booking, 'CONFIRMED');
 
@@ -879,14 +846,13 @@ export default function App() {
     return `https://wa.me/${digits}?text=${encodeURIComponent(text)}`;
   };
 
-  const addNotification = (title, desc, type = 'BOOKING', booking = null, status = null) => {
+  const addNotification = (title, desc, type = 'BOOKING', booking = null) => {
     const item = {
       id: Date.now(),
       title,
       desc,
       type,
       bookingId: booking?.id || null,
-      status: status || booking?.status || null,
       unread: true,
       createdAt: new Date().toISOString()
     };
@@ -894,34 +860,19 @@ export default function App() {
     if (typeof Notification !== 'undefined' && Notification.permission === 'granted') {
       try {
         const browserNotification = new Notification(title, {
-          body: booking ? `${booking.customerName} • ${booking.pickup} → ${booking.destination} • ${booking.travelDate} • ${status || booking.status || 'NEW'}` : desc,
+          body: booking ? `${booking.customerName} • ${booking.pickup} → ${booking.destination} • ${booking.travelDate}` : desc,
           icon: '/icon-192.png',
-          tag: booking ? `booking-${booking.id}-${status || booking.status || 'NEW'}` : undefined
+          tag: booking ? `booking-${booking.id}` : undefined
         });
         if (booking) {
           browserNotification.onclick = () => {
             window.focus();
-            const url = type === 'CUSTOMER_UPDATE'
-              ? generateCustomerStatusWhatsAppUrl(booking, status || booking.status || 'NEW')
-              : generateWhatsAppUrl(booking, true);
-            window.open(url, '_blank', 'noopener,noreferrer');
+            window.open(generateWhatsAppUrl(booking, true), '_blank', 'noopener,noreferrer');
             browserNotification.close();
           };
         }
       } catch {}
     }
-  };
-
-  const openCustomerStatusWhatsAppFromNotification = (notification) => {
-    if (!notification?.bookingId) return;
-    const booking = bookings.find(item => String(item.id) === String(notification.bookingId));
-    if (!booking) {
-      showToast('Booking details are not loaded yet. Please refresh the dashboard.');
-      return;
-    }
-    const status = notification.status || booking.status || 'NEW';
-    setNotifications(prev => prev.map(item => item.id === notification.id ? { ...item, unread: false } : item));
-    window.open(generateCustomerStatusWhatsAppUrl(booking, status), '_blank', 'noopener,noreferrer');
   };
 
   const openBookingWhatsAppFromNotification = (notification) => {
@@ -951,7 +902,7 @@ export default function App() {
     e.preventDefault();
     if (isBookingSubmitting) return;
     setIsBookingSubmitting(true);
-    if (!formData.customerName || !formData.mobile || !formData.pickup || !formData.destination) {
+    if (!formData.customerName || !formData.email || !formData.mobile || !formData.pickup || !formData.destination) {
       setIsBookingSubmitting(false);
       showToast('⚠️ Please fill in all required customer details.');
       return;
@@ -961,6 +912,7 @@ export default function App() {
     const newBooking = {
       id: newId,
       customerName: formData.customerName,
+      email: formData.email,
       mobile: formData.mobile,
       whatsapp: formData.whatsapp || formData.mobile,
       pickup: formData.pickup,
@@ -980,6 +932,7 @@ export default function App() {
       const { error } = await supabase.from('bookings').insert({
         id: newBooking.id,
         customer_name: newBooking.customerName,
+        customer_email: newBooking.email || null,
         mobile: newBooking.mobile,
         whatsapp: newBooking.whatsapp,
         pickup: newBooking.pickup,
@@ -1012,7 +965,7 @@ export default function App() {
     setBookingModalOpen(false);
     setIsBookingSubmitting(false);
     showToast(supabaseConfigured
-      ? `✅ ${newId} saved. Owner WhatsApp notification will be sent by Supabase.`
+      ? `✅ ${newId} saved. Owner dashboard receives the exact booking; use the WhatsApp button to send it.`
       : `✅ Trip Request ${newId} saved locally. Connect Supabase + WhatsApp API for automatic notification.`
     );
   };
@@ -1023,6 +976,7 @@ export default function App() {
     const newBooking = {
       id: newId,
       customerName: formData.customerName,
+      email: formData.email,
       mobile: formData.mobile,
       whatsapp: formData.whatsapp || formData.mobile,
       pickup: formData.pickup,
@@ -1042,6 +996,7 @@ export default function App() {
       const { error } = await supabase.from('bookings').insert({
         id: newBooking.id,
         customer_name: newBooking.customerName,
+        customer_email: newBooking.email || null,
         mobile: newBooking.mobile,
         whatsapp: newBooking.whatsapp,
         pickup: newBooking.pickup,
@@ -1065,9 +1020,22 @@ export default function App() {
     setBookings(prev => [newBooking, ...prev.filter(b => b.id !== newBooking.id)]);
     setConfirmedBooking(newBooking);
     showToast(supabaseConfigured
-      ? '🚀 Custom Trip Request Sent! Owner WhatsApp notification will be sent automatically.'
+      ? '🚀 Custom Trip Request Sent! Owner dashboard receives the exact booking; use the WhatsApp button to send it.'
       : '🚀 Custom Trip Request saved locally. Connect Supabase + WhatsApp Cloud API for automatic owner notification.'
     );
+  };
+
+  const findMatchingPackages = (from, destination) => {
+    const fromText = String(from || '').trim().toLowerCase();
+    const destinationText = String(destination || '').trim().toLowerCase();
+    if (!destinationText) return [];
+    return packages.filter(pkg => {
+      const route = String(pkg.route || '').toLowerCase();
+      const name = String(pkg.name || '').toLowerCase();
+      const destinationMatch = route.includes(destinationText) || name.includes(destinationText);
+      const fromMatch = !fromText || route.includes(fromText) || route.includes('tirupati') || name.includes(fromText);
+      return destinationMatch && fromMatch;
+    });
   };
 
   const startPackageBooking = (pkg, vehicleName = null) => {
@@ -1089,10 +1057,8 @@ export default function App() {
     const booking = bookings.find(b => b.id === id);
     if (!booking) return;
 
-    const normalizedStatus = String(newStatus || 'NEW').toUpperCase();
-
     if (supabaseConfigured && supabase) {
-      const { error } = await supabase.from('bookings').update({ status: normalizedStatus }).eq('id', id);
+      const { error } = await supabase.from('bookings').update({ status: newStatus }).eq('id', id);
       if (error) {
         console.error('Supabase booking status update failed:', error);
         showToast(`⚠️ Status update failed: ${error.message}`);
@@ -1100,20 +1066,30 @@ export default function App() {
       }
     }
 
-    const updatedBooking = { ...booking, status: normalizedStatus };
+    const updatedBooking = { ...booking, status: newStatus };
     setBookings(prev => prev.map(b => b.id === id ? updatedBooking : b));
 
-    // Every owner status change creates a customer WhatsApp-ready notification
-    // containing the exact booking details and the new status.
     addNotification(
-      `Booking ${id} → ${normalizedStatus}`,
-      `${booking.customerName} • ${booking.pickup} → ${booking.destination} • Customer WhatsApp message ready for ${normalizedStatus}.`,
-      'CUSTOMER_UPDATE',
-      updatedBooking,
-      normalizedStatus
+      `Booking ${id} → ${newStatus}`,
+      `${booking.customerName} • ${booking.pickup} → ${booking.destination} • ${booking.travelDate}`,
+      'STATUS',
+      updatedBooking
     );
 
-    showToast(`✅ ${id} updated to ${normalizedStatus}. Customer message is ready — click “Share to WhatsApp”.`);
+    if (supabaseConfigured && supabase && booking.email) {
+      const { data, error } = await supabase.functions.invoke('send-booking-status-email', {
+        body: { bookingId: id, status: newStatus }
+      });
+      if (error) {
+        console.error('Booking status email failed:', error);
+        showToast(`⚠️ ${id} updated to ${newStatus}, but email could not be sent.`);
+      } else {
+        console.log('Booking status email sent:', data);
+        showToast(`✅ ${id} → ${newStatus}. Customer email sent automatically.`);
+      }
+    } else {
+      showToast(`✅ ${id} → ${newStatus}. ${booking.email ? '' : 'Add customer email for automatic email updates.'}`);
+    }
   };
 
   // Delete a booking from the Owner Dashboard.
@@ -1920,8 +1896,21 @@ export default function App() {
 
                   <form onSubmit={(e) => {
                     e.preventDefault();
-                    setActiveTab('packages');
-                    showToast(`Showing results for ${searchParams.pickup} to ${searchParams.destination}`);
+                    const pickup = String(searchParams.pickup || '').trim();
+                    const destination = String(searchParams.destination || '').trim();
+                    if (!pickup || !destination) {
+                      showToast('⚠️ Please enter both pickup and destination.');
+                      return;
+                    }
+                    const matches = findMatchingPackages(pickup, destination);
+                    setFormData(prev => ({ ...prev, pickup, destination, travelDate: searchParams.date, travellers: searchParams.travellers }));
+                    if (matches.length > 0) {
+                      setActiveTab('packages');
+                      showToast(`✅ ${matches.length} package${matches.length > 1 ? 's' : ''} found. Select your package and vehicle.`);
+                    } else {
+                      setActiveTab('vehicles');
+                      showToast('ℹ️ No matching package found. Choose a vehicle directly.');
+                    }
                   }} className="space-y-4">
                     
                     {/* Pickup Location */}
@@ -2542,6 +2531,10 @@ export default function App() {
                     />
                   </div>
                   <div>
+                    <label className="block text-xs font-bold text-slate-700 mb-1">Email Address *</label>
+                    <input type="email" required value={formData.email} onChange={(e) => setFormData({ ...formData, email: e.target.value })} placeholder="customer@example.com" className="w-full p-3 bg-slate-50 border border-slate-200 rounded-xl text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-orange-500" />
+                  </div>
+                  <div>
                     <label className="block text-xs font-bold text-slate-700 mb-1">Mobile Number *</label>
                     <input
                       type="tel"
@@ -2822,10 +2815,20 @@ export default function App() {
                           </div>
                           {notification.type === 'BOOKING' && notification.bookingId ? (
                             <button type="button" onClick={() => openBookingWhatsAppFromNotification(notification)} className="shrink-0 inline-flex items-center justify-center px-4 py-2 rounded-lg text-xs font-extrabold text-white bg-green-600 hover:bg-green-700">WhatsApp Trip</button>
-                          ) : notification.type === 'CUSTOMER_UPDATE' && notification.bookingId ? (
-                            <button type="button" onClick={() => openCustomerStatusWhatsAppFromNotification(notification)} className="shrink-0 inline-flex items-center justify-center px-4 py-2 rounded-lg text-xs font-extrabold text-white bg-green-600 hover:bg-green-700">Share to WhatsApp</button>
+                          ) : notification.type === 'STATUS' && notification.bookingId ? (
+                            <button type="button" onClick={() => {
+                              const booking = bookings.find(item => String(item.id) === String(notification.bookingId));
+                              if (!booking) { showToast('Booking details are not loaded yet. Please refresh the dashboard.'); return; }
+                              setNotifications(prev => prev.map(item => item.id === notification.id ? { ...item, unread: false } : item));
+                              window.open(generateCustomerStatusWhatsAppUrl(booking, booking.status), '_blank', 'noopener,noreferrer');
+                            }} className="shrink-0 inline-flex items-center justify-center px-4 py-2 rounded-lg text-xs font-extrabold text-white bg-green-600 hover:bg-green-700">WhatsApp {notification.bookingId ? (bookings.find(b => b.id === notification.bookingId)?.status || 'UPDATE') : 'UPDATE'}</button>
                           ) : notification.type === 'CONFIRMATION' && notification.bookingId ? (
-                            <button type="button" onClick={() => openCustomerStatusWhatsAppFromNotification({ ...notification, status: 'CONFIRMED' })} className="shrink-0 inline-flex items-center justify-center px-4 py-2 rounded-lg text-xs font-extrabold text-white bg-green-600 hover:bg-green-700">Share to WhatsApp</button>
+                            <button type="button" onClick={() => {
+                              const booking = bookings.find(item => String(item.id) === String(notification.bookingId));
+                              if (!booking) { showToast('Booking details are not loaded yet. Please refresh the dashboard.'); return; }
+                              setNotifications(prev => prev.map(item => item.id === notification.id ? { ...item, unread: false } : item));
+                              window.open(generateCustomerConfirmationWhatsAppUrl(booking), '_blank', 'noopener,noreferrer');
+                            }} className="shrink-0 inline-flex items-center justify-center px-4 py-2 rounded-lg text-xs font-extrabold text-white bg-green-600 hover:bg-green-700">Send Confirmation</button>
                           ) : (
                             <span className="text-[10px] font-bold text-slate-400">{notification.type}</span>
                           )}
@@ -2919,11 +2922,10 @@ export default function App() {
                                   </div>
                                   {b.status === 'NEW' && <div className="text-[10px] text-amber-600 font-bold">Waiting for owner action</div>}
                                   {b.status === 'ACCEPTED' && <div className="text-[10px] text-amber-700 font-bold">Request accepted</div>}
-                                  {b.status === 'CONFIRMED' && <div className="text-[10px] text-emerald-700 font-bold">Trip confirmed • WhatsApp update ready</div>}
-                                  {b.status === 'PAID' && <div className="text-[10px] text-violet-700 font-bold">Payment marked paid • WhatsApp update ready</div>}
-                                  {b.status === 'ON_TRIP' && <div className="text-[10px] text-blue-700 font-bold">Customer is on trip • WhatsApp update ready</div>}
-                                  {b.status === 'COMPLETED' && <div className="text-[10px] text-emerald-700 font-bold">Trip completed • WhatsApp update ready</div>}
-                                  {b.status === 'CANCELLED' && <div className="text-[10px] text-rose-700 font-bold">Trip cancelled • WhatsApp update ready</div>}
+                                  {b.status === 'CONFIRMED' && <div className="text-[10px] text-emerald-700 font-bold">Trip confirmed</div>}
+                                  {b.status === 'PAID' && <div className="text-[10px] text-violet-700 font-bold">Payment marked paid</div>}
+                                  {b.status === 'ON_TRIP' && <div className="text-[10px] text-blue-700 font-bold">Customer is on trip</div>}
+                                  {b.status === 'COMPLETED' && <div className="text-[10px] text-emerald-700 font-bold">Trip completed</div>}
                                   <div className="grid grid-cols-3 gap-2">
                                     <a
                                       href={`tel:${String(b.mobile || '').replace(/[^+0-9]/g, '')}`}
@@ -3248,6 +3250,11 @@ END $$;`}
                   placeholder="Enter Name"
                   className="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-orange-500"
                 />
+              </div>
+
+              <div>
+                <label className="block text-xs font-bold text-slate-700 mb-1">Email Address *</label>
+                <input type="email" required value={formData.email} onChange={(e) => setFormData({ ...formData, email: e.target.value })} placeholder="customer@example.com" className="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-orange-500" />
               </div>
 
               <div className="grid grid-cols-2 gap-3">
