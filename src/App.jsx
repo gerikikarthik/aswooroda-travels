@@ -812,12 +812,63 @@ export default function App() {
 
   const buildOwnerWhatsAppMessage = (booking) => `*ASWAROODA TREKS & TRAVELS - TRIP BOOKING REQUEST*\n\n*Booking ID:* ${booking.id}\n*Customer:* ${booking.customerName}\n*Mobile:* ${booking.mobile}\n*WhatsApp:* ${booking.whatsapp || booking.mobile}\n*Pickup:* ${booking.pickup}\n*Destination:* ${booking.destination}\n*Travel Date:* ${booking.travelDate}\n*Pickup Time:* ${booking.pickupTime}\n*Travellers:* ${booking.travellers}\n*Package:* ${booking.packageName || 'Custom Trip'}\n*Vehicle:* ${booking.vehicleName || 'Not selected'}\n*Estimated Price:* ₹${booking.totalPrice || 'Quotation Required'}\n*Notes:* ${booking.specialNotes || 'None'}\n\nPlease contact the customer regarding this exact trip booking request.`;
 
-  const buildCustomerConfirmationMessage = (booking) => `*ASWAROODA TREKS & TRAVELS - BOOKING CONFIRMED*\n\nHello ${booking.customerName || 'Customer'},\n\nYour trip booking has been *CONFIRMED* by ASWAROODA TREKS & TRAVELS.\n\n*Booking ID:* ${booking.id}\n*Pickup:* ${booking.pickup}\n*Destination:* ${booking.destination}\n*Travel Date:* ${booking.travelDate}\n*Pickup Time:* ${booking.pickupTime || 'As discussed'}\n*Travellers:* ${booking.travellers}\n*Package:* ${booking.packageName || 'Custom Trip'}\n*Vehicle:* ${booking.vehicleName || 'To be confirmed'}\n*Price:* ₹${booking.totalPrice || 'Quotation Required'}\n*Notes:* ${booking.specialNotes || 'None'}\n\nThank you for booking with ASWAROODA TREKS & TRAVELS. Please keep your Booking ID *${booking.id}* for tracking your trip.`;
-
-  const generateCustomerConfirmationWhatsAppUrl = (booking) => {
-    const digits = normalizeWhatsAppNumber(booking?.whatsapp || booking?.mobile);
-    return `https://wa.me/${digits}?text=${encodeURIComponent(buildCustomerConfirmationMessage(booking))}`;
+  const CUSTOMER_STATUS_TEXT = {
+    NEW: {
+      title: 'TRIP REQUEST RECEIVED',
+      intro: 'We have received your trip request and it is currently being reviewed by our team.',
+      closing: 'We will update you once the owner reviews your request.'
+    },
+    ACCEPTED: {
+      title: 'TRIP REQUEST ACCEPTED',
+      intro: 'Your trip request has been accepted by ASWAROODA TREKS & TRAVELS.',
+      closing: 'Our team will proceed with the next booking steps.'
+    },
+    CONFIRMED: {
+      title: 'TRIP BOOKING CONFIRMED',
+      intro: 'Your trip booking has been confirmed by ASWAROODA TREKS & TRAVELS.',
+      closing: 'Your booked trip details are confirmed. Please keep your Booking ID for tracking.'
+    },
+    PAID: {
+      title: 'PAYMENT RECEIVED',
+      intro: 'Your payment status has been updated to PAID by ASWAROODA TREKS & TRAVELS.',
+      closing: 'Your payment has been marked as received. Please keep your Booking ID for future reference.'
+    },
+    ON_TRIP: {
+      title: 'TRIP IS ONGOING',
+      intro: 'Your trip is now marked as ON TRIP by ASWAROODA TREKS & TRAVELS.',
+      closing: 'Have a safe and pleasant journey with ASWAROODA TREKS & TRAVELS.'
+    },
+    COMPLETED: {
+      title: 'TRIP COMPLETED',
+      intro: 'Your trip has been marked as COMPLETED by ASWAROODA TREKS & TRAVELS.',
+      closing: 'Thank you for travelling with ASWAROODA TREKS & TRAVELS.'
+    },
+    CANCELLED: {
+      title: 'TRIP BOOKING CANCELLED',
+      intro: 'Your trip booking has been marked as CANCELLED by ASWAROODA TREKS & TRAVELS.',
+      closing: 'If you need clarification about the cancellation, please contact ASWAROODA TREKS & TRAVELS.'
+    }
   };
+
+  const buildCustomerStatusMessage = (booking, status = booking?.status || 'NEW') => {
+    const normalizedStatus = String(status || 'NEW').toUpperCase();
+    const statusInfo = CUSTOMER_STATUS_TEXT[normalizedStatus] || CUSTOMER_STATUS_TEXT.NEW;
+    const customerName = booking?.customerName || 'Customer';
+    const packageName = booking?.packageName || 'Custom Trip';
+    const vehicleName = booking?.vehicleName || 'To be confirmed';
+    const price = booking?.totalPrice ? `₹${booking.totalPrice}` : 'Quotation Required';
+
+    return `Hello ${customerName}, this is ASWAROODA TREKS & TRAVELS regarding your trip request #${booking?.id || 'N/A'} (${packageName}).\n\n${statusInfo.intro}\n\n*BOOKING DETAILS*\n*Booking ID:* ${booking?.id || 'N/A'}\n*Status:* ${normalizedStatus}\n*Pickup:* ${booking?.pickup || 'Not provided'}\n*Destination:* ${booking?.destination || 'Not provided'}\n*Travel Date:* ${booking?.travelDate || 'Not provided'}\n*Pickup Time:* ${booking?.pickupTime || 'As discussed'}\n*Travellers:* ${booking?.travellers || 'Not provided'}\n*Package:* ${packageName}\n*Vehicle:* ${vehicleName}\n*Price:* ${price}\n*Notes:* ${booking?.specialNotes || 'None'}\n\n${statusInfo.closing}\n\nThank you,\n*ASWAROODA TREKS & TRAVELS*`;
+  };
+
+  const generateCustomerStatusWhatsAppUrl = (booking, status = booking?.status || 'NEW') => {
+    const digits = normalizeWhatsAppNumber(booking?.whatsapp || booking?.mobile);
+    return `https://wa.me/${digits}?text=${encodeURIComponent(buildCustomerStatusMessage(booking, status))}`;
+  };
+
+  // Backward-compatible helper used by existing confirmation UI.
+  const buildCustomerConfirmationMessage = (booking) => buildCustomerStatusMessage(booking, 'CONFIRMED');
+  const generateCustomerConfirmationWhatsAppUrl = (booking) => generateCustomerStatusWhatsAppUrl(booking, 'CONFIRMED');
 
   const generateWhatsAppUrl = (booking, isOwnerView = false) => {
     const text = isOwnerView
@@ -828,13 +879,14 @@ export default function App() {
     return `https://wa.me/${digits}?text=${encodeURIComponent(text)}`;
   };
 
-  const addNotification = (title, desc, type = 'BOOKING', booking = null) => {
+  const addNotification = (title, desc, type = 'BOOKING', booking = null, status = null) => {
     const item = {
       id: Date.now(),
       title,
       desc,
       type,
       bookingId: booking?.id || null,
+      status: status || booking?.status || null,
       unread: true,
       createdAt: new Date().toISOString()
     };
@@ -842,19 +894,34 @@ export default function App() {
     if (typeof Notification !== 'undefined' && Notification.permission === 'granted') {
       try {
         const browserNotification = new Notification(title, {
-          body: booking ? `${booking.customerName} • ${booking.pickup} → ${booking.destination} • ${booking.travelDate}` : desc,
+          body: booking ? `${booking.customerName} • ${booking.pickup} → ${booking.destination} • ${booking.travelDate} • ${status || booking.status || 'NEW'}` : desc,
           icon: '/icon-192.png',
-          tag: booking ? `booking-${booking.id}` : undefined
+          tag: booking ? `booking-${booking.id}-${status || booking.status || 'NEW'}` : undefined
         });
         if (booking) {
           browserNotification.onclick = () => {
             window.focus();
-            window.open(generateWhatsAppUrl(booking, true), '_blank', 'noopener,noreferrer');
+            const url = type === 'CUSTOMER_UPDATE'
+              ? generateCustomerStatusWhatsAppUrl(booking, status || booking.status || 'NEW')
+              : generateWhatsAppUrl(booking, true);
+            window.open(url, '_blank', 'noopener,noreferrer');
             browserNotification.close();
           };
         }
       } catch {}
     }
+  };
+
+  const openCustomerStatusWhatsAppFromNotification = (notification) => {
+    if (!notification?.bookingId) return;
+    const booking = bookings.find(item => String(item.id) === String(notification.bookingId));
+    if (!booking) {
+      showToast('Booking details are not loaded yet. Please refresh the dashboard.');
+      return;
+    }
+    const status = notification.status || booking.status || 'NEW';
+    setNotifications(prev => prev.map(item => item.id === notification.id ? { ...item, unread: false } : item));
+    window.open(generateCustomerStatusWhatsAppUrl(booking, status), '_blank', 'noopener,noreferrer');
   };
 
   const openBookingWhatsAppFromNotification = (notification) => {
@@ -1022,8 +1089,10 @@ export default function App() {
     const booking = bookings.find(b => b.id === id);
     if (!booking) return;
 
+    const normalizedStatus = String(newStatus || 'NEW').toUpperCase();
+
     if (supabaseConfigured && supabase) {
-      const { error } = await supabase.from('bookings').update({ status: newStatus }).eq('id', id);
+      const { error } = await supabase.from('bookings').update({ status: normalizedStatus }).eq('id', id);
       if (error) {
         console.error('Supabase booking status update failed:', error);
         showToast(`⚠️ Status update failed: ${error.message}`);
@@ -1031,24 +1100,20 @@ export default function App() {
       }
     }
 
-    const updatedBooking = { ...booking, status: newStatus };
+    const updatedBooking = { ...booking, status: normalizedStatus };
     setBookings(prev => prev.map(b => b.id === id ? updatedBooking : b));
 
-    if (newStatus === 'CONFIRMED') {
-      addNotification(
-        `Booking ${id} CONFIRMED`,
-        `${booking.customerName} • ${booking.pickup} → ${booking.destination} • Confirmation ready to send to customer.`,
-        'CONFIRMATION',
-        updatedBooking
-      );
-      showToast(`✅ ${id} confirmed. Click “Send Confirmation” to send the exact booked trip details to the customer WhatsApp.`);
-    } else {
-      addNotification(`Booking ${id} → ${newStatus}`, `${booking.customerName} / ${booking.packageName}`, 'STATUS', updatedBooking);
-      showToast(supabaseConfigured
-        ? `✅ ${id} updated to ${newStatus}.`
-        : `Updated ${id} status to ${newStatus}`
-      );
-    }
+    // Every owner status change creates a customer WhatsApp-ready notification
+    // containing the exact booking details and the new status.
+    addNotification(
+      `Booking ${id} → ${normalizedStatus}`,
+      `${booking.customerName} • ${booking.pickup} → ${booking.destination} • Customer WhatsApp message ready for ${normalizedStatus}.`,
+      'CUSTOMER_UPDATE',
+      updatedBooking,
+      normalizedStatus
+    );
+
+    showToast(`✅ ${id} updated to ${normalizedStatus}. Customer message is ready — click “Share to WhatsApp”.`);
   };
 
   // Delete a booking from the Owner Dashboard.
@@ -2757,13 +2822,10 @@ export default function App() {
                           </div>
                           {notification.type === 'BOOKING' && notification.bookingId ? (
                             <button type="button" onClick={() => openBookingWhatsAppFromNotification(notification)} className="shrink-0 inline-flex items-center justify-center px-4 py-2 rounded-lg text-xs font-extrabold text-white bg-green-600 hover:bg-green-700">WhatsApp Trip</button>
+                          ) : notification.type === 'CUSTOMER_UPDATE' && notification.bookingId ? (
+                            <button type="button" onClick={() => openCustomerStatusWhatsAppFromNotification(notification)} className="shrink-0 inline-flex items-center justify-center px-4 py-2 rounded-lg text-xs font-extrabold text-white bg-green-600 hover:bg-green-700">Share to WhatsApp</button>
                           ) : notification.type === 'CONFIRMATION' && notification.bookingId ? (
-                            <button type="button" onClick={() => {
-                              const booking = bookings.find(item => String(item.id) === String(notification.bookingId));
-                              if (!booking) { showToast('Booking details are not loaded yet. Please refresh the dashboard.'); return; }
-                              setNotifications(prev => prev.map(item => item.id === notification.id ? { ...item, unread: false } : item));
-                              window.open(generateCustomerConfirmationWhatsAppUrl(booking), '_blank', 'noopener,noreferrer');
-                            }} className="shrink-0 inline-flex items-center justify-center px-4 py-2 rounded-lg text-xs font-extrabold text-white bg-green-600 hover:bg-green-700">Send Confirmation</button>
+                            <button type="button" onClick={() => openCustomerStatusWhatsAppFromNotification({ ...notification, status: 'CONFIRMED' })} className="shrink-0 inline-flex items-center justify-center px-4 py-2 rounded-lg text-xs font-extrabold text-white bg-green-600 hover:bg-green-700">Share to WhatsApp</button>
                           ) : (
                             <span className="text-[10px] font-bold text-slate-400">{notification.type}</span>
                           )}
@@ -2857,10 +2919,11 @@ export default function App() {
                                   </div>
                                   {b.status === 'NEW' && <div className="text-[10px] text-amber-600 font-bold">Waiting for owner action</div>}
                                   {b.status === 'ACCEPTED' && <div className="text-[10px] text-amber-700 font-bold">Request accepted</div>}
-                                  {b.status === 'CONFIRMED' && <div className="text-[10px] text-emerald-700 font-bold">Trip confirmed</div>}
-                                  {b.status === 'PAID' && <div className="text-[10px] text-violet-700 font-bold">Payment marked paid</div>}
-                                  {b.status === 'ON_TRIP' && <div className="text-[10px] text-blue-700 font-bold">Customer is on trip</div>}
-                                  {b.status === 'COMPLETED' && <div className="text-[10px] text-emerald-700 font-bold">Trip completed</div>}
+                                  {b.status === 'CONFIRMED' && <div className="text-[10px] text-emerald-700 font-bold">Trip confirmed • WhatsApp update ready</div>}
+                                  {b.status === 'PAID' && <div className="text-[10px] text-violet-700 font-bold">Payment marked paid • WhatsApp update ready</div>}
+                                  {b.status === 'ON_TRIP' && <div className="text-[10px] text-blue-700 font-bold">Customer is on trip • WhatsApp update ready</div>}
+                                  {b.status === 'COMPLETED' && <div className="text-[10px] text-emerald-700 font-bold">Trip completed • WhatsApp update ready</div>}
+                                  {b.status === 'CANCELLED' && <div className="text-[10px] text-rose-700 font-bold">Trip cancelled • WhatsApp update ready</div>}
                                   <div className="grid grid-cols-3 gap-2">
                                     <a
                                       href={`tel:${String(b.mobile || '').replace(/[^+0-9]/g, '')}`}
