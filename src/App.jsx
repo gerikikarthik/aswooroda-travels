@@ -1353,6 +1353,249 @@ export default function App() {
           .aasw-site-shell select,
           .aasw-site-shell textarea { font-size: 16px; min-height: 44px; }
         }
+
+
+        /* ================================================================
+           ASWAROODA FINAL VISUAL SYSTEM
+           Keep cinematic areas dark and make every light card/form readable.
+           This layer intentionally overrides the older global dark-heading rules.
+           It changes presentation only; booking, Supabase and dashboard logic stay intact.
+           ================================================================ */
+        .aasw-site-shell {
+          color: #0f172a;
+          background: transparent;
+        }
+
+        /* Default content headings on light surfaces */
+        .aasw-site-shell h1,
+        .aasw-site-shell h2,
+        .aasw-site-shell h3,
+        .aasw-site-shell h4 {
+          color: #0f172a !important;
+          text-shadow: none !important;
+          font-weight: 900 !important;
+        }
+
+        /* Header */
+        .aasw-site-shell > header {
+          background: rgba(255,255,255,.94) !important;
+          border-color: rgba(148,163,184,.28) !important;
+          color: #0f172a !important;
+          backdrop-filter: blur(18px);
+        }
+        .aasw-site-shell > header .text-slate-900 { color:#0f172a !important; }
+        .aasw-site-shell > header .text-slate-500,
+        .aasw-site-shell > header .text-slate-600 { color:#475569 !important; }
+        .aasw-site-shell > header button,
+        .aasw-site-shell > header a,
+        .aasw-site-shell > header span { text-shadow:none !important; }
+
+        /* Light content sections */
+        .aasw-site-shell main section.bg-slate-100,
+        .aasw-site-shell main section.bg-slate-100\/60,
+        .aasw-site-shell main section.bg-white {
+          background: rgba(248,250,252,.96) !important;
+          color:#0f172a !important;
+          border-color:rgba(148,163,184,.24) !important;
+          backdrop-filter: blur(3px);
+        }
+        .aasw-site-shell main section.bg-slate-100 h1,
+        .aasw-site-shell main section.bg-slate-100 h2,
+        .aasw-site-shell main section.bg-slate-100 h3,
+        .aasw-site-shell main section.bg-slate-100\/60 h1,
+        .aasw-site-shell main section.bg-slate-100\/60 h2,
+        .aasw-site-shell main section.bg-slate-100\/60 h3,
+        .aasw-site-shell main section.bg-white h1,
+        .aasw-site-shell main section.bg-white h2,
+        .aasw-site-shell main section.bg-white h3,
+        .aasw-site-shell main section.bg-white h4 {
+          color:#0f172a !important;
+          text-shadow:none !important;
+        }
+
+        /* All normal white cards stay white. */
+        .aasw-site-shell main .bg-white,
+        .aasw-site-shell main .bg-white\/90 {
+          background-color:#ffffff !important;
+        }
+        .aasw-site-shell main .bg-white.rounded-2xl,
+        .aasw-site-shell main .bg-white.rounded-3xl {
+          color:#0f172a !important;
+          border-color:#e2e8f0 !important;
+          box-shadow:0 12px 34px rgba(15,23,42,.10), 0 2px 8px rgba(15,23,42,.05) !important;
+          backdrop-filter:none !important;
+        }
+        .aasw-site-shell main .bg-white.rounded-2xl h1,
+        .aasw-site-shell main .bg-white.rounded-2xl h2,
+        .aasw-site-shell main .bg-white.rounded-2xl h3,
+        .aasw-site-shell main .bg-white.rounded-2xl h4,
+        .aasw-site-shell main .bg-white.rounded-3xl h1,
+        .aasw-site-shell main .bg-white.rounded-3xl h2,
+        .aasw-site-shell main .bg-white.rounded-3xl h3,
+        .aasw-site-shell main .bg-white.rounded-3xl h4 {
+          color:#0f172a !important;
+          text-shadow:none !important;
+        }
+        .aasw-site-shell main .bg-white.rounded-2xl .text-slate-900,
+        .aasw-site-shell main .bg-white.rounded-2xl .text-slate-800,
+        .aasw-site-shell main .bg-white.rounded-2xl .text-slate-700,
+        .aasw-site-shell main .bg-white.rounded-3xl .text-slate-900,
+        .aasw-site-shell main .bg-white.rounded-3xl .text-slate-800,
+        .aasw-site-shell main .bg-white.rounded-3xl .text-slate-700 {
+          color:#334155 !important;
+        }
+        .aasw-site-shell main .bg-white.rounded-2xl .text-slate-900,
+        .aasw-site-shell main .bg-white.rounded-3xl .text-slate-900 {
+          color:#0f172a !important;
+        }
+        .aasw-site-shell main .bg-white.rounded-2xl .text-slate-500,
+        .aasw-site-shell main .bg-white.rounded-2xl .text-slate-600,
+        .aasw-site-shell main .bg-white.rounded-3xl .text-slate-500,
+        .aasw-site-shell main .bg-white.rounded-3xl .text-slate-600 {
+          color:#64748b !important;
+        }
+
+        /* Normal forms/modals are light and readable. */
+        .aasw-site-shell main form:not(.aasw-trip-planner form),
+        .aasw-site-shell main .bg-white.rounded-3xl form {
+          background:#ffffff !important;
+          color:#0f172a !important;
+          border-color:#e2e8f0 !important;
+        }
+        .aasw-site-shell main form:not(.aasw-trip-planner form) label,
+        .aasw-site-shell main .bg-white.rounded-3xl form label {
+          color:#334155 !important;
+        }
+        .aasw-site-shell main form:not(.aasw-trip-planner form) p,
+        .aasw-site-shell main form:not(.aasw-trip-planner form) small {
+          color:#64748b !important;
+        }
+
+        /* Light inputs outside the dark hero planner. */
+        .aasw-site-shell main input:not([type="checkbox"]):not([type="radio"]):not(.aasw-dark-input),
+        .aasw-site-shell main select:not(.aasw-dark-input),
+        .aasw-site-shell main textarea:not(.aasw-dark-input) {
+          background:#ffffff !important;
+          color:#0f172a !important;
+          border-color:#cbd5e1 !important;
+          color-scheme:light;
+        }
+        .aasw-site-shell main input:not([type="checkbox"]):not([type="radio"])::placeholder,
+        .aasw-site-shell main textarea::placeholder {
+          color:#94a3b8 !important;
+        }
+        .aasw-site-shell main select:not(.aasw-dark-input) option {
+          background:#ffffff !important;
+          color:#0f172a !important;
+        }
+
+        /* Hero remains intentionally cinematic/dark. */
+        .aasw-site-shell main > div > section:first-child .aasw-home-title,
+        .aasw-site-shell .aasw-home-title {
+          color:#ffffff !important;
+          text-shadow:0 3px 9px rgba(0,0,0,.9), 0 0 24px rgba(0,0,0,.7) !important;
+        }
+        .aasw-site-shell .aasw-trip-planner {
+          background:rgba(5,16,31,.96) !important;
+          color:#ffffff !important;
+          border-color:rgba(255,190,72,.58) !important;
+        }
+        .aasw-site-shell .aasw-trip-planner h1,
+        .aasw-site-shell .aasw-trip-planner h2,
+        .aasw-site-shell .aasw-trip-planner h3,
+        .aasw-site-shell .aasw-trip-planner h4 { color:#ffffff !important; text-shadow:0 2px 7px rgba(0,0,0,.55) !important; }
+        .aasw-site-shell .aasw-trip-planner label { color:#fff7e6 !important; }
+        .aasw-site-shell .aasw-trip-planner input,
+        .aasw-site-shell .aasw-trip-planner select,
+        .aasw-site-shell .aasw-trip-planner textarea {
+          background:#fffaf0 !important;
+          color:#142033 !important;
+          border-color:#e8c98b !important;
+          color-scheme:light;
+        }
+        .aasw-site-shell .aasw-trip-planner input::placeholder { color:#687386 !important; }
+        .aasw-site-shell .aasw-trip-planner .text-slate-900 { color:#142033 !important; }
+        .aasw-site-shell .aasw-trip-planner .bg-slate-50 { background:#fffaf0 !important; color:#142033 !important; }
+
+        /* Home destination carousel remains dark over photos. */
+        .aasw-site-shell .aasw-destination-track .aasw-destination-card h1,
+        .aasw-site-shell .aasw-destination-track .aasw-destination-card h2,
+        .aasw-site-shell .aasw-destination-track .aasw-destination-card h3,
+        .aasw-site-shell .aasw-destination-track .aasw-destination-card h4,
+        .aasw-site-shell .aasw-destination-track .aasw-destination-card .text-white {
+          color:#ffffff !important;
+          text-shadow:0 2px 6px rgba(0,0,0,.9) !important;
+        }
+
+        /* Featured/home cards: force their intended light text palette. */
+        .aasw-site-shell main .bg-slate-100\/60 .bg-white h1,
+        .aasw-site-shell main .bg-slate-100\/60 .bg-white h2,
+        .aasw-site-shell main .bg-slate-100\/60 .bg-white h3,
+        .aasw-site-shell main .bg-slate-100\/60 .bg-white h4 { color:#0f172a !important; }
+        .aasw-site-shell main .bg-slate-100\/60 .bg-white p.text-slate-600,
+        .aasw-site-shell main .bg-slate-100\/60 .bg-white .text-slate-600 { color:#64748b !important; }
+        .aasw-site-shell main .bg-slate-100\/60 .bg-white .text-slate-900 { color:#0f172a !important; }
+
+        /* Package pricing rows: name dark, price orange. */
+        .aasw-site-shell main .bg-slate-50.rounded-2xl {
+          background:#f8fafc !important;
+          border-color:#e2e8f0 !important;
+          color:#334155 !important;
+        }
+        .aasw-site-shell main .bg-slate-50.rounded-2xl .bg-white {
+          background:#ffffff !important;
+          color:#334155 !important;
+          border-color:#e2e8f0 !important;
+        }
+        .aasw-site-shell main .bg-slate-50.rounded-2xl .bg-white .text-slate-700 { color:#334155 !important; }
+        .aasw-site-shell main .bg-slate-50.rounded-2xl .bg-white .text-orange-600 { color:#ea580c !important; }
+
+        /* Buttons: explicit contrast so no button becomes invisible. */
+        .aasw-site-shell main button.bg-orange-600,
+        .aasw-site-shell main a.bg-orange-600 { color:#ffffff !important; }
+        .aasw-site-shell main button.bg-slate-100,
+        .aasw-site-shell main a.bg-slate-100 {
+          background:#e2e8f0 !important;
+          color:#0f172a !important;
+          border:1px solid #cbd5e1 !important;
+        }
+        .aasw-site-shell main button.bg-slate-100:hover,
+        .aasw-site-shell main a.bg-slate-100:hover { background:#cbd5e1 !important; color:#0f172a !important; }
+
+        /* Contact cards */
+        .aasw-site-shell main a[href^="tel:"],
+        .aasw-site-shell main a[href^="mailto:"],
+        .aasw-site-shell main a[href*="wa.me/"] {
+          background:#f8fafc !important;
+          color:#0f172a !important;
+          border-color:#e2e8f0 !important;
+        }
+
+        /* Footer stays dark. */
+        .aasw-site-shell footer,
+        .aasw-site-shell footer h1,
+        .aasw-site-shell footer h2,
+        .aasw-site-shell footer h3,
+        .aasw-site-shell footer h4 { color:#ffffff !important; }
+        .aasw-site-shell footer { background:rgba(2,8,16,.92) !important; }
+
+        /* Mobile bottom nav is light. */
+        .aasw-site-shell > div.md\:hidden.fixed.bottom-0 {
+          background:rgba(255,255,255,.97) !important;
+          color:#475569 !important;
+          border-color:#e2e8f0 !important;
+          backdrop-filter:blur(14px);
+        }
+
+        /* Accessibility: preserve keyboard focus visibility. */
+        .aasw-site-shell button:focus-visible,
+        .aasw-site-shell a:focus-visible,
+        .aasw-site-shell input:focus-visible,
+        .aasw-site-shell select:focus-visible,
+        .aasw-site-shell textarea:focus-visible {
+          outline:3px solid rgba(245,158,11,.65) !important;
+          outline-offset:2px;
+        }
       `}</style>
       {/* Toast Notification Banner */}
       {toastMessage && (
@@ -1391,12 +1634,12 @@ export default function App() {
               { id: 'vehicles', label: 'Vehicles' },
               { id: 'destinations', label: 'Destinations' },
               { id: 'mytrips', label: 'My Trips' },
-              { id: 'custom', label: 'Custom Trip' },
+              { id: 'call', label: 'Call Owner' },
               { id: 'contact', label: 'Contact' }
             ].map(item => (
               <button
                 key={item.id}
-                onClick={() => setActiveTab(item.id)}
+                onClick={() => item.id === 'call' ? (window.location.href = `tel:${settings.phone}`) : setActiveTab(item.id)}
                 className={`px-3 py-2 rounded-lg text-sm transition-all ${
                   activeTab === item.id 
                     ? 'text-orange-600 bg-orange-50 font-bold' 
@@ -1459,13 +1702,17 @@ export default function App() {
               { id: 'vehicles', label: 'Vehicles Fleet' },
               { id: 'destinations', label: 'Popular Destinations' },
               { id: 'mytrips', label: 'Track My Booking' },
-              { id: 'custom', label: 'Custom Trip Plan' },
+              { id: 'call', label: 'Call Owner' },
               { id: 'contact', label: 'Contact Us' },
               { id: 'admin', label: 'Owner / Admin Dashboard' }
             ].map(item => (
               <button
                 key={item.id}
                 onClick={() => {
+                  if (item.id === 'call') {
+                    window.location.href = `tel:${settings.phone}`;
+                    return;
+                  }
                   setActiveTab(item.id);
                   setMobileMenuOpen(false);
                 }}
@@ -2978,11 +3225,11 @@ END $$;`}
           { id: 'home', label: 'Home', icon: IconCompass },
           { id: 'packages', label: 'Packages', icon: IconCar },
           { id: 'mytrips', label: 'My Trips', icon: IconClock },
-          { id: 'custom', label: 'Custom Plan', icon: IconPlus }
+          { id: 'call', label: 'Call', icon: IconPhone }
         ].map((item) => (
           <button
             key={item.id}
-            onClick={() => setActiveTab(item.id)}
+            onClick={() => item.id === 'call' ? (window.location.href = `tel:${settings.phone}`) : setActiveTab(item.id)}
             className={`flex flex-col items-center gap-1 px-3 py-1 rounded-xl transition ${
               activeTab === item.id ? 'text-orange-600 font-black' : 'hover:text-slate-900'
             }`}
