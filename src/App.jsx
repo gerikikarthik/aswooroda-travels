@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo } from 'react';
+﻿import React, { useState, useEffect, useMemo } from 'react';
 import { supabase, supabaseConfigured } from './lib_supabase.js';
 
 // Icons using inline SVG helpers for high performance and zero dependency failures
@@ -121,25 +121,25 @@ const INITIAL_PACKAGES = [
     id: 'pkg-1',
     name: '1 Day Arunachalam Package',
     duration: '1 Day (18 Hours)',
-    route: 'Tirupati → Kanipakam → Arunachalam → Golden Temple → Tirupati',
+    route: 'Tirupati â†’ Kanipakam â†’ Arunachalam â†’ Golden Temple â†’ Tirupati',
     distance: '395 KM Approx',
     startingPrice: 6500,
     image: 'https://images.unsplash.com/photo-1582510003544-4d00b7f74220?auto=format&fit=crop&w=800&q=80',
     description: 'Special one-day divine tour covering Kanipakam Vinayaka, Arunachaleswara Temple, and Vellore Sripuram Golden Temple.',
     itinerary: [
       { time: '06:00 AM', title: 'Pickup from Tirupati', detail: 'Doorstep / Hotel / Station pickup in Tirupati' },
-      { time: '07:15 AM', title: 'Tirupati → Kanipakam', detail: '~68 KM drive through comfortable highway' },
-      { time: '07:15 AM – 08:15 AM', title: 'Kanipakam Swamy Darshan', detail: 'Darshan of Swayambu Sri Varasiddhi Vinayaka Swamy' },
-      { time: '08:15 AM – 09:00 AM', title: 'Breakfast Halt', detail: '45 Minutes break at hygienic restaurant' },
-      { time: '09:00 AM – 11:30 AM', title: 'Kanipakam → Arunachalam', detail: '~131 KM highway drive' },
-      { time: '11:30 AM – 02:30 PM', title: 'Arunachalam Darshan', detail: '3 Hours dedicated for Arunachaleswara Temple & Lingam' },
-      { time: '02:30 PM – 03:15 PM', title: 'Lunch Halt', detail: '45 Minutes lunch break' },
-      { time: '03:15 PM – 04:45 PM', title: 'Arunachalam → Golden Temple', detail: '~80 KM journey to Vellore' },
-      { time: '04:45 PM – 06:45 PM', title: 'Golden Temple Visit', detail: '2 Hours visit to Sripuram Golden Temple' },
-      { time: '06:45 PM – 07:30 PM', title: 'Golden Temple → Tirupati', detail: '~116 KM return drive starts' },
-      { time: '07:30 PM – 08:30 PM', title: 'Dinner Halt', detail: '1 Hour relaxed dinner halt' },
+      { time: '07:15 AM', title: 'Tirupati â†’ Kanipakam', detail: '~68 KM drive through comfortable highway' },
+      { time: '07:15 AM â€“ 08:15 AM', title: 'Kanipakam Swamy Darshan', detail: 'Darshan of Swayambu Sri Varasiddhi Vinayaka Swamy' },
+      { time: '08:15 AM â€“ 09:00 AM', title: 'Breakfast Halt', detail: '45 Minutes break at hygienic restaurant' },
+      { time: '09:00 AM â€“ 11:30 AM', title: 'Kanipakam â†’ Arunachalam', detail: '~131 KM highway drive' },
+      { time: '11:30 AM â€“ 02:30 PM', title: 'Arunachalam Darshan', detail: '3 Hours dedicated for Arunachaleswara Temple & Lingam' },
+      { time: '02:30 PM â€“ 03:15 PM', title: 'Lunch Halt', detail: '45 Minutes lunch break' },
+      { time: '03:15 PM â€“ 04:45 PM', title: 'Arunachalam â†’ Golden Temple', detail: '~80 KM journey to Vellore' },
+      { time: '04:45 PM â€“ 06:45 PM', title: 'Golden Temple Visit', detail: '2 Hours visit to Sripuram Golden Temple' },
+      { time: '06:45 PM â€“ 07:30 PM', title: 'Golden Temple â†’ Tirupati', detail: '~116 KM return drive starts' },
+      { time: '07:30 PM â€“ 08:30 PM', title: 'Dinner Halt', detail: '1 Hour relaxed dinner halt' },
       { time: '08:30 PM', title: 'Start Return to Tirupati', detail: 'Smooth smooth highway drive back' },
-      { time: '10:30 PM – 10:45 PM', title: 'Tirupati Drop', detail: 'Drop off at your original pickup location' }
+      { time: '10:30 PM â€“ 10:45 PM', title: 'Tirupati Drop', detail: 'Drop off at your original pickup location' }
     ],
     pricing: {
       'Sedan (4+1)': 6500,
@@ -158,7 +158,7 @@ const INITIAL_PACKAGES = [
     id: 'pkg-2',
     name: '2 Days Arunachalam & Kanchipuram Package',
     duration: '2 Days / 1 Night',
-    route: 'Tirupati → Arunachalam → Kanchipuram → Tirupati',
+    route: 'Tirupati â†’ Arunachalam â†’ Kanchipuram â†’ Tirupati',
     distance: '520 KM Approx',
     startingPrice: 10000,
     image: 'https://images.unsplash.com/photo-1600100397608-f010e423b971?auto=format&fit=crop&w=800&q=80',
@@ -185,7 +185,7 @@ const INITIAL_PACKAGES = [
     id: 'pkg-3',
     name: 'Kanipakam Special Offer',
     duration: 'Half Day (5 Hours)',
-    route: 'Tirupati → Kanipakam → Tirupati',
+    route: 'Tirupati â†’ Kanipakam â†’ Tirupati',
     distance: '135 KM Roundtrip',
     startingPrice: 3500,
     image: 'https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?auto=format&fit=crop&w=800&q=80',
@@ -210,13 +210,13 @@ const INITIAL_PACKAGES = [
 ];
 
 const INITIAL_VEHICLES = [
-  { id: 'v-1', name: 'Sedan (Dzire / Etios)', capacity: '4+1 Passengers', pricePerKm: '₹13/km', startPrice: 3500, ac: true, luggage: '2 Large Bags', image: 'https://images.unsplash.com/photo-1549399542-7e3f8b79c341?auto=format&fit=crop&w=600&q=80', rating: 4.9 },
-  { id: 'v-2', name: 'Maruti Ertiga', capacity: '6+1 Passengers', pricePerKm: '₹16/km', startPrice: 4000, ac: true, luggage: '3 Medium Bags', image: 'https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?auto=format&fit=crop&w=600&q=80', rating: 4.8 },
-  { id: 'v-3', name: 'Toyota Innova', capacity: '7+1 Passengers', pricePerKm: '₹19/km', startPrice: 4500, ac: true, luggage: '4 Large Bags', image: 'https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=600&q=80', rating: 4.9 },
-  { id: 'v-4', name: 'Innova Crysta', capacity: '7+1 Passengers', pricePerKm: '₹22/km', startPrice: 5000, ac: true, luggage: '4 Large Bags', image: 'https://images.unsplash.com/photo-1542282088-72c9c27ed0cd?auto=format&fit=crop&w=600&q=80', rating: 5.0 },
-  { id: 'v-5', name: 'Tempo Traveller (12+1)', capacity: '12+1 Passengers', pricePerKm: '₹26/km', startPrice: 6000, ac: true, luggage: '8 Large Bags', image: 'https://images.unsplash.com/photo-1570125909232-eb263c188f7e?auto=format&fit=crop&w=600&q=80', rating: 4.9 },
-  { id: 'v-6', name: 'Tempo Traveller Luxury (17+1)', capacity: '17+1 Passengers', pricePerKm: '₹30/km', startPrice: 14500, ac: true, luggage: '12 Bags', image: 'https://images.unsplash.com/photo-1563720223185-11003d516935?auto=format&fit=crop&w=600&q=80', rating: 4.9 },
-  { id: 'v-7', name: 'Luxury Bus (20+1)', capacity: '20+1 Passengers', pricePerKm: '₹38/km', startPrice: 16000, ac: true, luggage: 'Full Boot Space', image: 'https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?auto=format&fit=crop&w=600&q=80', rating: 4.9 }
+  { id: 'v-1', name: 'Sedan (Dzire / Etios)', capacity: '4+1 Passengers', pricePerKm: 'â‚¹13/km', startPrice: 3500, ac: true, luggage: '2 Large Bags', image: 'https://images.unsplash.com/photo-1549399542-7e3f8b79c341?auto=format&fit=crop&w=600&q=80', rating: 4.9 },
+  { id: 'v-2', name: 'Maruti Ertiga', capacity: '6+1 Passengers', pricePerKm: 'â‚¹16/km', startPrice: 4000, ac: true, luggage: '3 Medium Bags', image: 'https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?auto=format&fit=crop&w=600&q=80', rating: 4.8 },
+  { id: 'v-3', name: 'Toyota Innova', capacity: '7+1 Passengers', pricePerKm: 'â‚¹19/km', startPrice: 4500, ac: true, luggage: '4 Large Bags', image: 'https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=600&q=80', rating: 4.9 },
+  { id: 'v-4', name: 'Innova Crysta', capacity: '7+1 Passengers', pricePerKm: 'â‚¹22/km', startPrice: 5000, ac: true, luggage: '4 Large Bags', image: 'https://images.unsplash.com/photo-1542282088-72c9c27ed0cd?auto=format&fit=crop&w=600&q=80', rating: 5.0 },
+  { id: 'v-5', name: 'Tempo Traveller (12+1)', capacity: '12+1 Passengers', pricePerKm: 'â‚¹26/km', startPrice: 6000, ac: true, luggage: '8 Large Bags', image: 'https://images.unsplash.com/photo-1570125909232-eb263c188f7e?auto=format&fit=crop&w=600&q=80', rating: 4.9 },
+  { id: 'v-6', name: 'Tempo Traveller Luxury (17+1)', capacity: '17+1 Passengers', pricePerKm: 'â‚¹30/km', startPrice: 14500, ac: true, luggage: '12 Bags', image: 'https://images.unsplash.com/photo-1563720223185-11003d516935?auto=format&fit=crop&w=600&q=80', rating: 4.9 },
+  { id: 'v-7', name: 'Luxury Bus (20+1)', capacity: '20+1 Passengers', pricePerKm: 'â‚¹38/km', startPrice: 16000, ac: true, luggage: 'Full Boot Space', image: 'https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?auto=format&fit=crop&w=600&q=80', rating: 4.9 }
 ];
 
 const DESTINATIONS = [
@@ -229,7 +229,7 @@ const DESTINATIONS = [
   { id: 'd-7', name: 'Hyderabad', tag: 'City of Pearls', description: 'Charminar, Golconda Fort, Ramoji Film City, and royal cuisine.', image: 'https://images.unsplash.com/photo-1572252821143-2041ee77238b?auto=format&fit=crop&w=600&q=80' },
   { id: 'd-8', name: 'Goa', tag: 'Coastal Paradise', description: 'Pristine beaches, Portuguese architecture, and nightlife.', image: 'https://images.unsplash.com/photo-1512343879784-a960bf40e7f2?auto=format&fit=crop&w=600&q=80' },
   { id: 'd-9', name: 'Ooty', tag: 'Queen of Hill Stations', description: 'Tea gardens, cool mountain air, lakes, and toy train rides.', image: 'https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=600&q=80' },
-  { id: 'd-10', name: 'Kerala', tag: 'God’s Own Country', description: 'Backwaters of Alleppey, Munnar tea hills, and serene beaches.', image: 'https://images.unsplash.com/photo-1602216056096-3b40cc0c9944?auto=format&fit=crop&w=600&q=80' }
+  { id: 'd-10', name: 'Kerala', tag: 'Godâ€™s Own Country', description: 'Backwaters of Alleppey, Munnar tea hills, and serene beaches.', image: 'https://images.unsplash.com/photo-1602216056096-3b40cc0c9944?auto=format&fit=crop&w=600&q=80' }
 ];
 
 const INITIAL_BOOKINGS = [
@@ -318,17 +318,20 @@ export default function App() {
   const [isAdminLoggedIn, setIsAdminLoggedIn] = useState(false);
   const [adminTab, setAdminTab] = useState('requests'); // requests, packages, vehicles, settings, sql
   const [adminPinInput, setAdminPinInput] = useState('');
+  const [adminEmail, setAdminEmail] = useState('');
+  const [adminPassword, setAdminPassword] = useState('');
+  const [adminAuthLoading, setAdminAuthLoading] = useState(false);
   const [editingPackage, setEditingPackage] = useState(null);
   const [editingVehicle, setEditingVehicle] = useState(null);
   const [fleetEditorOpen, setFleetEditorOpen] = useState(false);
   const [vehicleForm, setVehicleForm] = useState({
     id: '', name: '', type: 'Sedan', capacity: '4+1 Passengers', startPrice: 0,
-    pricePerKm: '₹13/km', ac: true, luggage: '2 Large Bags', image: '', rating: 5,
+    pricePerKm: 'â‚¹13/km', ac: true, luggage: '2 Large Bags', image: '', rating: 5,
     registrationNumber: '', driverName: '', status: 'AVAILABLE', notes: ''
   });
   const [packageEditorOpen, setPackageEditorOpen] = useState(false);
   const [packageForm, setPackageForm] = useState({
-    id: '', name: '', duration: '1 Day', route: 'Tirupati → ', distance: '', startingPrice: 0,
+    id: '', name: '', duration: '1 Day', route: 'Tirupati â†’ ', distance: '', startingPrice: 0,
     image: '', description: '', note: '', pricingText: '', inclusionsText: '', exclusionsText: '', itineraryText: ''
   });
   const [notifications, setNotifications] = useState(() => {
@@ -358,6 +361,7 @@ export default function App() {
 
   // Track / Search Booking State
   const [trackerSearch, setTrackerSearch] = useState('');
+  const [trackerMobile, setTrackerMobile] = useState('');
   const [searchedBooking, setSearchedBooking] = useState(null);
 
   useEffect(() => {
@@ -390,6 +394,113 @@ export default function App() {
     localStorage.setItem('aswooroda_notifications', JSON.stringify(notifications));
   }, [notifications]);
 
+  // Restore owner dashboard only when the Supabase session belongs to the configured owner.
+  useEffect(() => {
+    if (!supabaseConfigured || !supabase) return;
+    let cancelled = false;
+    supabase.auth.getSession().then(({ data, error }) => {
+      if (cancelled || error) return;
+      const ownerEmail = (import.meta.env.VITE_OWNER_EMAIL || '').trim().toLowerCase();
+      const signedInEmail = (data?.session?.user?.email || '').trim().toLowerCase();
+      if (data?.session && ownerEmail && signedInEmail === ownerEmail) setIsAdminLoggedIn(true);
+    });
+    const { data: listener } = supabase.auth.onAuthStateChange((_event, session) => {
+      const ownerEmail = (import.meta.env.VITE_OWNER_EMAIL || '').trim().toLowerCase();
+      const signedInEmail = (session?.user?.email || '').trim().toLowerCase();
+      setIsAdminLoggedIn(Boolean(session && ownerEmail && signedInEmail === ownerEmail));
+    });
+    return () => { cancelled = true; listener?.subscription?.unsubscribe(); };
+  }, []);
+
+  const handleOwnerLogin = async () => {
+    if (!supabaseConfigured || !supabase) {
+      showToast('Supabase is not configured. Check your .env file.');
+      return;
+    }
+    const ownerEmail = (import.meta.env.VITE_OWNER_EMAIL || '').trim().toLowerCase();
+    if (!adminEmail.trim() || !adminPassword) {
+      showToast('Enter your owner email and password.');
+      return;
+    }
+    if (!ownerEmail || adminEmail.trim().toLowerCase() !== ownerEmail) {
+      showToast('This email is not configured as the owner account.');
+      return;
+    }
+    setAdminAuthLoading(true);
+    const { data, error } = await supabase.auth.signInWithPassword({
+      email: adminEmail.trim(), password: adminPassword
+    });
+    setAdminAuthLoading(false);
+    if (error) {
+      showToast(`Owner login failed: ${error.message}`);
+      return;
+    }
+    if ((data?.user?.email || '').trim().toLowerCase() !== ownerEmail) {
+      await supabase.auth.signOut();
+      showToast('Only the configured owner account can access this dashboard.');
+      return;
+    }
+    // On the first owner login, copy the app's existing starter packages into the shared database.
+    const { data: existingPackages, error: existingPackagesError } = await supabase
+      .from('travel_packages').select('id').limit(1);
+    if (!existingPackagesError && (!existingPackages || existingPackages.length === 0)) {
+      const starterRows = INITIAL_PACKAGES.map(pkg => ({ id: String(pkg.id), data: pkg, updated_at: new Date().toISOString() }));
+      const { error: seedError } = await supabase.from('travel_packages').upsert(starterRows);
+      if (seedError) console.error('Starter package sync failed:', seedError);
+    }
+    setIsAdminLoggedIn(true);
+    setAdminPassword('');
+    showToast('Logged in securely as owner.');
+  };
+
+  const handleOwnerLogout = async () => {
+    if (supabase) await supabase.auth.signOut();
+    setIsAdminLoggedIn(false);
+    setAdminPassword('');
+    showToast('Logged out.');
+  };
+
+  // Load shared business settings and keep every open website synced in realtime.
+  useEffect(() => {
+    if (!supabaseConfigured || !supabase) return;
+    let cancelled = false;
+    const loadSettings = async () => {
+      const { data, error } = await supabase.from('site_settings').select('data').eq('id', 'main').maybeSingle();
+      if (cancelled) return;
+      if (error) { console.error('Supabase settings load failed:', error); return; }
+      if (data?.data && typeof data.data === 'object') setSettings(prev => ({ ...DEFAULT_SETTINGS, ...data.data }));
+    };
+    loadSettings();
+    const channel = supabase.channel('aswarooda-settings-live')
+      .on('postgres_changes', { event: '*', schema: 'public', table: 'site_settings', filter: 'id=eq.main' }, loadSettings)
+      .subscribe();
+    return () => { cancelled = true; supabase.removeChannel(channel); };
+  }, []);
+
+  // Load shared packages and apply edits/deletes made by the owner on any device.
+  useEffect(() => {
+    if (!supabaseConfigured || !supabase) return;
+    let cancelled = false;
+    const loadPackages = async () => {
+      const { data, error } = await supabase.from('travel_packages').select('id,data').order('updated_at', { ascending: false });
+      if (cancelled) return;
+      if (error) { console.error('Supabase packages load failed:', error); return; }
+      if (data?.length) setPackages(data.map(row => ({ ...(row.data || {}), id: String(row.id) })));
+    };
+    loadPackages();
+    const channel = supabase.channel('aswarooda-packages-live')
+      .on('postgres_changes', { event: '*', schema: 'public', table: 'travel_packages' }, (payload) => {
+        if (cancelled) return;
+        if (payload.eventType === 'DELETE' && payload.old?.id != null) {
+          setPackages(prev => prev.filter(pkg => String(pkg.id) !== String(payload.old.id)));
+        } else if (payload.new?.data) {
+          const item = { ...payload.new.data, id: String(payload.new.id) };
+          setPackages(prev => [item, ...prev.filter(pkg => String(pkg.id) !== String(item.id))]);
+        }
+      }).subscribe();
+    return () => { cancelled = true; supabase.removeChannel(channel); };
+  }, []);
+
   // Load fleet from Supabase when configured; localStorage remains the offline fallback.
   useEffect(() => {
     let cancelled = false;
@@ -406,13 +517,28 @@ export default function App() {
       })));
     };
     loadVehicles();
-    return () => { cancelled = true; };
+    const channel = supabaseConfigured && supabase
+      ? supabase.channel('aswarooda-vehicles-live')
+          .on('postgres_changes', { event: '*', schema: 'public', table: 'vehicles' }, (payload) => {
+            if (cancelled) return;
+            const mapVehicle = (v) => ({
+              id: v.id, name: v.name, type: v.type || 'Vehicle', capacity: v.capacity || '',
+              startPrice: Number(v.start_price || 0), pricePerKm: v.price_per_km || '', ac: v.ac !== false,
+              luggage: v.luggage || '', image: v.image || '', rating: Number(v.rating || 5),
+              registrationNumber: v.registration_number || '', driverName: v.driver_name || '',
+              status: v.status || 'AVAILABLE', notes: v.notes || ''
+            });
+            if (payload.eventType === 'DELETE' && payload.old) setVehicles(prev => prev.filter(v => String(v.id) !== String(payload.old.id)));
+            else if (payload.new) { const item = mapVehicle(payload.new); setVehicles(prev => [item, ...prev.filter(v => String(v.id) !== String(item.id))]); }
+          }).subscribe()
+      : null;
+    return () => { cancelled = true; if (channel && supabase) supabase.removeChannel(channel); };
   }, []);
 
   // Load the real booking list from Supabase and keep it live across devices/tabs.
   // This is the main customer -> Owner Dashboard realtime bridge.
   useEffect(() => {
-    if (!supabaseConfigured || !supabase) return;
+    if (!supabaseConfigured || !supabase || !isAdminLoggedIn) return;
 
     let cancelled = false;
 
@@ -499,7 +625,7 @@ export default function App() {
       cancelled = true;
       supabase.removeChannel(channel);
     };
-  }, []);
+  }, [isAdminLoggedIn]);
 
   // Keep an already-open tracking result live when the owner changes its status.
   useEffect(() => {
@@ -540,14 +666,45 @@ export default function App() {
       setEditingVehicle(null);
       setVehicleForm({
         id: '', name: '', type: 'Sedan', capacity: '4+1 Passengers', startPrice: 0,
-        pricePerKm: '₹13/km', ac: true, luggage: '2 Large Bags', image: '', rating: 5,
+        pricePerKm: 'â‚¹13/km', ac: true, luggage: '2 Large Bags', image: '', rating: 5,
         registrationNumber: '', driverName: '', status: 'AVAILABLE', notes: ''
       });
     }
     setFleetEditorOpen(true);
   };
 
+  const saveBusinessSettings = async () => {
+    if (!supabaseConfigured || !supabase) { showToast('Supabase is not configured. Check your .env file.'); return; }
+    const { data: sessionData } = await supabase.auth.getSession();
+    const ownerEmail = (import.meta.env.VITE_OWNER_EMAIL || '').trim().toLowerCase();
+    if (!sessionData?.session || (sessionData.session.user?.email || '').trim().toLowerCase() !== ownerEmail) {
+      showToast('Please sign in with the configured owner Supabase account.'); return;
+    }
+    const safeSettings = { ...settings, whatsapp: normalizeWhatsAppNumber(settings.whatsapp) };
+    const { error } = await supabase.from('site_settings').upsert({ id: 'main', data: safeSettings, updated_at: new Date().toISOString() });
+    if (error) { console.error('Business settings save failed:', error); showToast(`Settings save failed: ${error.message}`); return; }
+    setSettings(safeSettings);
+    localStorage.setItem('aswooroda_settings', JSON.stringify(safeSettings));
+    showToast('Business settings saved for all visitors.');
+  };
+
+  const deletePackage = async (pkg) => {
+    if (!window.confirm(`Delete ${pkg.name}?`)) return;
+    if (!supabaseConfigured || !supabase) { showToast('Supabase is not configured.'); return; }
+    const { data: sessionData } = await supabase.auth.getSession();
+    const ownerEmail = (import.meta.env.VITE_OWNER_EMAIL || '').trim().toLowerCase();
+    if (!sessionData?.session || (sessionData.session.user?.email || '').trim().toLowerCase() !== ownerEmail) { showToast('Owner Supabase login required.'); return; }
+    const { error } = await supabase.from('travel_packages').delete().eq('id', String(pkg.id));
+    if (error) { showToast(`Package delete failed: ${error.message}`); return; }
+    setPackages(prev => prev.filter(item => String(item.id) !== String(pkg.id)));
+    showToast(`Deleted ${pkg.name} for all visitors.`);
+  };
+
   const saveVehicle = async () => {
+    if (!supabaseConfigured || !supabase) { showToast('Supabase is not configured.'); return; }
+    const { data: sessionData } = await supabase.auth.getSession();
+    const ownerEmail = (import.meta.env.VITE_OWNER_EMAIL || '').trim().toLowerCase();
+    if (!sessionData?.session || (sessionData.session.user?.email || '').trim().toLowerCase() !== ownerEmail) { showToast('Owner Supabase login required.'); return; }
     if (!vehicleForm.name.trim()) { showToast('Vehicle name is required'); return; }
     const vehicle = {
       ...vehicleForm,
@@ -582,14 +739,14 @@ export default function App() {
 
   const deleteVehicle = async (vehicle) => {
     if (!window.confirm(`Delete ${vehicle.name}?`)) return;
-    setVehicles(prev => prev.filter(v => v.id !== vehicle.id));
-    if (supabaseConfigured && supabase) {
-      const { error } = await supabase.from('vehicles').delete().eq('id', vehicle.id);
-      if (error) showToast(`Deleted locally. Supabase delete failed: ${error.message}`);
-      else showToast('Vehicle deleted from Supabase');
-    } else {
-      showToast('Vehicle deleted');
-    }
+    if (!supabaseConfigured || !supabase) { showToast('Supabase is not configured.'); return; }
+    const { data: sessionData } = await supabase.auth.getSession();
+    const ownerEmail = (import.meta.env.VITE_OWNER_EMAIL || '').trim().toLowerCase();
+    if (!sessionData?.session || (sessionData.session.user?.email || '').trim().toLowerCase() !== ownerEmail) { showToast('Owner Supabase login required.'); return; }
+    const { error } = await supabase.from('vehicles').delete().eq('id', vehicle.id);
+    if (error) { showToast(`Vehicle delete failed: ${error.message}`); return; }
+    setVehicles(prev => prev.filter(v => String(v.id) !== String(vehicle.id)));
+    showToast('Vehicle deleted from Supabase');
   };
 
   const handleGetCurrentLocation = () => {
@@ -598,14 +755,14 @@ export default function App() {
         (position) => {
           setSearchParams(prev => ({ ...prev, pickup: 'Current Location (Tirupati Region)' }));
           setFormData(prev => ({ ...prev, pickup: 'Current Location (Tirupati Region)' }));
-          showToast('📍 Location acquired: Tirupati Region');
+          showToast('ðŸ“ Location acquired: Tirupati Region');
         },
         () => {
-          showToast('⚠️ Could not auto-detect location. Defaulted to Tirupati.');
+          showToast('âš ï¸ Could not auto-detect location. Defaulted to Tirupati.');
         }
       );
     } else {
-      showToast('⚠️ Geolocation is not supported by your browser.');
+      showToast('âš ï¸ Geolocation is not supported by your browser.');
     }
   };
 
@@ -614,7 +771,7 @@ export default function App() {
   const generateWhatsAppUrl = (booking, isOwnerView = false) => {
     const text = isOwnerView
       ? `Hello ${booking.customerName}, this is ASWAROODA TREKS & TRAVELS regarding your trip request #${booking.id} (${booking.packageName || 'Custom Trip'}). We have reviewed your request!`
-      : `*NEW TRIP REQUEST - ASWAROODA TREKS & TRAVELS*\n\n*Booking ID:* ${booking.id}\n*Customer:* ${booking.customerName}\n*Mobile:* ${booking.mobile}\n*WhatsApp:* ${booking.whatsapp || booking.mobile}\n*Pickup:* ${booking.pickup}\n*Destination:* ${booking.destination}\n*Date:* ${booking.travelDate} at ${booking.pickupTime}\n*Travellers:* ${booking.travellers}\n*Package:* ${booking.packageName}\n*Vehicle:* ${booking.vehicleName}\n*Estimated Price:* ₹${booking.totalPrice || 'Quotation Required'}\n*Notes:* ${booking.specialNotes || 'None'}\n\nPlease contact the customer and confirm availability.`;
+      : `*NEW TRIP REQUEST - ASWAROODA TREKS & TRAVELS*\n\n*Booking ID:* ${booking.id}\n*Customer:* ${booking.customerName}\n*Mobile:* ${booking.mobile}\n*WhatsApp:* ${booking.whatsapp || booking.mobile}\n*Pickup:* ${booking.pickup}\n*Destination:* ${booking.destination}\n*Date:* ${booking.travelDate} at ${booking.pickupTime}\n*Travellers:* ${booking.travellers}\n*Package:* ${booking.packageName}\n*Vehicle:* ${booking.vehicleName}\n*Estimated Price:* â‚¹${booking.totalPrice || 'Quotation Required'}\n*Notes:* ${booking.specialNotes || 'None'}\n\nPlease contact the customer and confirm availability.`;
     const targetPhone = isOwnerView ? (booking.whatsapp || booking.mobile) : settings.whatsapp;
     const digits = normalizeWhatsAppNumber(targetPhone);
     return `https://wa.me/${digits}?text=${encodeURIComponent(text)}`;
@@ -635,7 +792,7 @@ export default function App() {
       setNotificationPermission(permission);
       if (permission === 'granted') {
         addNotification('Notifications enabled', 'ASWAROODA TREKS & TRAVELS browser notifications are now enabled.', 'SYSTEM');
-        showToast('🔔 Browser notifications enabled.');
+        showToast('ðŸ”” Browser notifications enabled.');
       } else { showToast('Notifications permission was not granted.'); }
     } catch { showToast('Could not enable browser notifications.'); }
   };
@@ -644,7 +801,7 @@ export default function App() {
   const handleBookingSubmit = async (e) => {
     e.preventDefault();
     if (!formData.customerName || !formData.mobile || !formData.pickup || !formData.destination) {
-      showToast('⚠️ Please fill in all required customer details.');
+      showToast('âš ï¸ Please fill in all required customer details.');
       return;
     }
 
@@ -686,7 +843,7 @@ export default function App() {
       });
       if (error) {
         console.error('Supabase booking insert failed:', error);
-        showToast(`⚠️ Booking could not be saved to database: ${error.message}`);
+        showToast(`âš ï¸ Booking could not be saved to database: ${error.message}`);
         return;
       }
     }
@@ -700,8 +857,8 @@ export default function App() {
     setConfirmedBooking(newBooking);
     setBookingModalOpen(false);
     showToast(supabaseConfigured
-      ? `✅ ${newId} saved. Owner WhatsApp notification will be sent by Supabase.`
-      : `✅ Trip Request ${newId} saved locally. Connect Supabase + WhatsApp API for automatic notification.`
+      ? `âœ… ${newId} saved. Owner WhatsApp notification will be sent by Supabase.`
+      : `âœ… Trip Request ${newId} saved locally. Connect Supabase + WhatsApp API for automatic notification.`
     );
   };
 
@@ -745,7 +902,7 @@ export default function App() {
       });
       if (error) {
         console.error('Supabase custom trip insert failed:', error);
-        showToast(`⚠️ Custom trip could not be saved: ${error.message}`);
+        showToast(`âš ï¸ Custom trip could not be saved: ${error.message}`);
         return;
       }
     }
@@ -753,8 +910,8 @@ export default function App() {
     setBookings(prev => [newBooking, ...prev.filter(b => b.id !== newBooking.id)]);
     setConfirmedBooking(newBooking);
     showToast(supabaseConfigured
-      ? '🚀 Custom Trip Request Sent! Owner WhatsApp notification will be sent automatically.'
-      : '🚀 Custom Trip Request saved locally. Connect Supabase + WhatsApp Cloud API for automatic owner notification.'
+      ? 'ðŸš€ Custom Trip Request Sent! Owner WhatsApp notification will be sent automatically.'
+      : 'ðŸš€ Custom Trip Request saved locally. Connect Supabase + WhatsApp Cloud API for automatic owner notification.'
     );
   };
 
@@ -766,7 +923,7 @@ export default function App() {
     setFormData(prev => ({
       ...prev,
       packageName: pkg.name,
-      destination: pkg.route.split('→')[1]?.trim() || pkg.name,
+      destination: pkg.route.split('â†’')[1]?.trim() || pkg.name,
       vehicleName: selectedVehName,
       price: calculatedPrice
     }));
@@ -781,15 +938,15 @@ export default function App() {
       const { error } = await supabase.from('bookings').update({ status: newStatus }).eq('id', id);
       if (error) {
         console.error('Supabase booking status update failed:', error);
-        showToast(`⚠️ Status update failed: ${error.message}`);
+        showToast(`âš ï¸ Status update failed: ${error.message}`);
         return;
       }
     }
 
     setBookings(prev => prev.map(b => b.id === id ? { ...b, status: newStatus } : b));
-    addNotification(`Booking ${id} → ${newStatus}`, `${booking.customerName} / ${booking.packageName}`, 'STATUS');
+    addNotification(`Booking ${id} â†’ ${newStatus}`, `${booking.customerName} / ${booking.packageName}`, 'STATUS');
     showToast(supabaseConfigured
-      ? `✅ ${id} updated. Customer WhatsApp notification will be sent automatically.`
+      ? `âœ… ${id} updated. Customer WhatsApp notification will be sent automatically.`
       : `Updated ${id} status to ${newStatus}`
     );
   };
@@ -829,7 +986,7 @@ export default function App() {
   };
 
   const openPackageEditor = (pkg = null) => {
-    const p = pkg || { name: '', duration: '1 Day', route: 'Tirupati → ', distance: '', startingPrice: 0, image: '', description: '', note: '', pricing: {}, inclusions: [], exclusions: [], itinerary: [] };
+    const p = pkg || { name: '', duration: '1 Day', route: 'Tirupati â†’ ', distance: '', startingPrice: 0, image: '', description: '', note: '', pricing: {}, inclusions: [], exclusions: [], itinerary: [] };
     setEditingPackage(pkg);
     setPackageForm({
       id: p.id || '', name: p.name || '', duration: p.duration || '', route: p.route || '', distance: p.distance || '',
@@ -841,7 +998,7 @@ export default function App() {
     setPackageEditorOpen(true);
   };
 
-  const savePackageFromEditor = (e) => {
+  const savePackageFromEditor = async (e) => {
     e.preventDefault();
     if (!packageForm.name.trim() || !packageForm.route.trim()) { showToast('Package name and route are required.'); return; }
     const pricing = {};
@@ -861,7 +1018,15 @@ export default function App() {
       inclusions: packageForm.inclusionsText.split('\n').map(x => x.trim()).filter(Boolean),
       exclusions: packageForm.exclusionsText.split('\n').map(x => x.trim()).filter(Boolean)
     };
-    setPackages(prev => prev.some(x => x.id === pkg.id) ? prev.map(x => x.id === pkg.id ? pkg : x) : [pkg, ...prev]);
+    if (!supabaseConfigured || !supabase) { showToast('Supabase is not configured.'); return; }
+    const { data: sessionData } = await supabase.auth.getSession();
+    const ownerEmail = (import.meta.env.VITE_OWNER_EMAIL || '').trim().toLowerCase();
+    if (!sessionData?.session || (sessionData.session.user?.email || '').trim().toLowerCase() !== ownerEmail) { showToast('Owner Supabase login required.'); return; }
+    const { error: packageSaveError } = await supabase.from('travel_packages').upsert({
+      id: String(pkg.id), data: pkg, updated_at: new Date().toISOString()
+    });
+    if (packageSaveError) { console.error('Package save failed:', packageSaveError); showToast(`Package save failed: ${packageSaveError.message}`); return; }
+    setPackages(prev => prev.some(x => String(x.id) === String(pkg.id)) ? prev.map(x => String(x.id) === String(pkg.id) ? pkg : x) : [pkg, ...prev]);
     setPackageEditorOpen(false);
     setEditingPackage(null);
     addNotification(editingPackage ? 'Package updated' : 'New package added', pkg.name, 'PACKAGE');
@@ -923,7 +1088,7 @@ export default function App() {
         }
         .aasw-site-shell::before {
           content: ""; position: fixed; inset: 0; z-index: -2;
-          background: url("/aswarooda-car-background.png") center 72% / cover no-repeat;
+          background: url("/Sunset%20Drive%20Through%20Mountain%20Horizons.png") center 72% / cover no-repeat;
           transform: translateZ(0);
         }
         .aasw-site-shell::after {
@@ -1291,7 +1456,7 @@ export default function App() {
             <section className="relative bg-slate-900/20 text-white overflow-hidden min-h-[680px] md:min-h-[650px] py-8 md:py-10 flex items-start md:items-center">
               <div className="absolute inset-0 z-0 opacity-100">
                 <img
-                  src="/aswarooda-car-background.png"
+                  src="/Sunset%20Drive%20Through%20Mountain%20Horizons.png"
                   alt="ASWAROODA scenic cinematic car journey"
                   className="aasw-hero-car w-full h-full object-cover object-[72%_center] md:object-[center_62%]"
                 />
@@ -1467,7 +1632,7 @@ export default function App() {
                     <h2 className="text-3xl sm:text-4xl font-black text-white drop-shadow-lg">Popular Destinations</h2>
                     <p className="text-sm text-slate-200 mt-2">Discover your next journey with ASWAROODA.</p>
                   </div>
-                  <button onClick={() => setActiveTab('destinations')} className="self-start sm:self-auto text-orange-300 font-bold text-sm hover:text-white transition">View All 10 Destinations →</button>
+                  <button onClick={() => setActiveTab('destinations')} className="self-start sm:self-auto text-orange-300 font-bold text-sm hover:text-white transition">View All 10 Destinations â†’</button>
                 </div>
               </div>
               <div className="w-full overflow-hidden" aria-label="Moving popular destinations">
@@ -1484,12 +1649,12 @@ export default function App() {
                       className="aasw-destination-card group relative overflow-hidden rounded-2xl text-left shadow-xl border border-white/15 bg-slate-900 focus:outline-none focus:ring-2 focus:ring-orange-400"
                       aria-label={`Explore ${dest.name}`}
                     >
-                      <img src={dest.image} alt={dest.name} loading="lazy" onError={(e) => { e.currentTarget.onerror = null; e.currentTarget.src = "/aswarooda-car-background.png"; }} className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
+                      <img src={dest.image} alt={dest.name} loading="lazy" onError={(e) => { e.currentTarget.onerror = null; e.currentTarget.src = "/Sunset%20Drive%20Through%20Mountain%20Horizons.png"; }} className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
                       <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/25 to-transparent" />
                       <div className="absolute inset-x-0 bottom-0 p-4">
                         <span className="text-[10px] font-extrabold text-orange-300 uppercase tracking-wider block mb-1">{dest.tag}</span>
                         <h3 className="text-xl font-black text-white drop-shadow-md">{dest.name}</h3>
-                        <span className="inline-flex mt-2 text-xs font-bold text-white/90 group-hover:text-orange-200 transition">Explore trip ↗</span>
+                        <span className="inline-flex mt-2 text-xs font-bold text-white/90 group-hover:text-orange-200 transition">Explore trip â†—</span>
                       </div>
                     </button>
                   ))}
@@ -1534,7 +1699,7 @@ export default function App() {
 
                           <div className="bg-orange-50/80 border border-orange-100 rounded-xl p-3 mb-4">
                             <span className="text-[10px] font-bold uppercase text-orange-700 block">Starting From</span>
-                            <span className="text-2xl font-black text-orange-600">₹{pkg.startingPrice.toLocaleString()}</span>
+                            <span className="text-2xl font-black text-orange-600">â‚¹{pkg.startingPrice.toLocaleString()}</span>
                             <span className="text-xs text-slate-500 ml-1">/ trip</span>
                           </div>
                         </div>
@@ -1615,7 +1780,7 @@ export default function App() {
                         <h2 className="text-2xl font-black text-slate-900">{pkg.name}</h2>
                         <div className="text-right">
                           <span className="text-[10px] uppercase font-bold text-slate-400 block">From</span>
-                          <span className="text-2xl font-black text-orange-600">₹{pkg.startingPrice.toLocaleString()}</span>
+                          <span className="text-2xl font-black text-orange-600">â‚¹{pkg.startingPrice.toLocaleString()}</span>
                         </div>
                       </div>
 
@@ -1629,7 +1794,7 @@ export default function App() {
                           {pkg.pricing && Object.entries(pkg.pricing).map(([veh, pr]) => (
                             <div key={veh} className="bg-white p-2 rounded-lg border border-slate-200 flex justify-between items-center">
                               <span className="font-semibold text-slate-700 truncate">{veh}</span>
-                              <span className="font-bold text-orange-600">₹{pr.toLocaleString()}</span>
+                              <span className="font-bold text-orange-600">â‚¹{pr.toLocaleString()}</span>
                             </div>
                           ))}
                         </div>
@@ -1702,7 +1867,7 @@ export default function App() {
                         </div>
                         <div className="text-right">
                           <span className="text-[10px] uppercase font-bold text-slate-500 block">Starts From</span>
-                          <span className="text-lg font-bold text-slate-900">₹{v.startPrice.toLocaleString()}</span>
+                          <span className="text-lg font-bold text-slate-900">â‚¹{v.startPrice.toLocaleString()}</span>
                         </div>
                       </div>
                     </div>
@@ -1766,101 +1931,82 @@ export default function App() {
           <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
             <div className="bg-white rounded-3xl p-6 sm:p-8 shadow-xl border border-slate-200 mb-8">
               <h1 className="text-2xl font-black text-slate-900 mb-2">Track Your Booking Status</h1>
-              <p className="text-slate-600 text-xs mb-6">Enter your Booking ID (e.g. AST-2026-0001) or Mobile Number to view live trip status.</p>
+              <p className="text-slate-600 text-xs mb-6">Enter your Booking ID and the mobile number used when booking. This verifies the request before showing its status.</p>
 
-              <div className="flex gap-2">
+              <div className="grid grid-cols-1 sm:grid-cols-[1fr_1fr_auto] gap-3">
                 <input
                   type="text"
-                  placeholder="Enter Booking ID or Mobile Number"
+                  placeholder="Booking ID (e.g. AST-2026-1234567)"
                   value={trackerSearch}
                   onChange={(e) => setTrackerSearch(e.target.value)}
-                  className="flex-1 px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-sm font-bold focus:ring-2 focus:ring-orange-500 focus:outline-none"
+                  className="min-w-0 px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-sm font-bold focus:ring-2 focus:ring-orange-500 focus:outline-none"
+                />
+                <input
+                  type="tel"
+                  placeholder="Booking mobile number"
+                  value={trackerMobile}
+                  onChange={(e) => setTrackerMobile(e.target.value)}
+                  className="min-w-0 px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-sm font-bold focus:ring-2 focus:ring-orange-500 focus:outline-none"
                 />
                 <button
                   onClick={async () => {
                     const rawValue = trackerSearch.trim();
-                    const searchValue = rawValue.toLowerCase();
-                    if (!rawValue) {
+                    const mobileValue = trackerMobile.trim();
+                    if (!rawValue || !mobileValue) {
                       setSearchedBooking(null);
-                      showToast('⚠️ Enter a Booking ID or Mobile Number.');
+                      showToast('Enter both the Booking ID and the mobile number used for booking.');
                       return;
                     }
 
-                    // Production tracking must read from Supabase directly so it works
-                    // across Render, VS Code, mobile and different browsers/devices.
                     if (supabaseConfigured && supabase) {
-                      let data = null;
-                      let error = null;
-
-                      if (searchValue.startsWith('ast-')) {
-                        const result = await supabase
-                          .from('bookings')
-                          .select('*')
-                          .eq('id', rawValue)
-                          .maybeSingle();
-                        data = result.data;
-                        error = result.error;
-                      } else {
-                        const mobileValue = rawValue.replace(/\D/g, '');
-                        const result = await supabase
-                          .from('bookings')
-                          .select('*')
-                          .eq('mobile', mobileValue)
-                          .order('created_at', { ascending: false })
-                          .limit(1)
-                          .maybeSingle();
-                        data = result.data;
-                        error = result.error;
-                      }
-
-                      if (error) {
-                        console.error('Supabase booking tracking failed:', error);
-                        setSearchedBooking(null);
-                        showToast(`⚠️ Booking search failed: ${error.message}`);
-                        return;
-                      }
-
-                      if (data) {
+                      try {
+                        const { data, error } = await supabase.rpc('track_booking', {
+                          p_booking_id: rawValue,
+                          p_mobile: mobileValue
+                        });
+                        if (error) throw error;
+                        const row = Array.isArray(data) ? data[0] : data;
+                        if (!row) {
+                          setSearchedBooking(null);
+                          showToast('No booking matched that ID and mobile number. Please check both details.');
+                          return;
+                        }
                         const match = {
-                          id: data.id,
-                          customerName: data.customer_name || '',
-                          mobile: data.mobile || '',
-                          whatsapp: data.whatsapp || data.mobile || '',
-                          pickup: data.pickup || '',
-                          destination: data.destination || '',
-                          travelDate: data.travel_date || '',
-                          pickupTime: data.pickup_time || '',
-                          travellers: Number(data.travellers || 1),
-                          packageName: data.package_name || '',
-                          vehicleName: data.vehicle_name || '',
-                          totalPrice: data.total_price == null ? 0 : Number(data.total_price),
-                          specialNotes: data.special_notes || '',
-                          status: data.status || 'NEW',
-                          createdAt: data.created_at || new Date().toISOString()
+                          id: row.id,
+                          customerName: row.customer_name || '',
+                          mobile: row.mobile || mobileValue,
+                          whatsapp: row.mobile || mobileValue,
+                          pickup: row.pickup || '',
+                          destination: row.destination || '',
+                          travelDate: row.travel_date || '',
+                          pickupTime: row.pickup_time || '',
+                          travellers: Number(row.travellers || 1),
+                          packageName: row.package_name || '',
+                          vehicleName: row.vehicle_name || '',
+                          totalPrice: row.total_price == null ? 0 : Number(row.total_price),
+                          specialNotes: '',
+                          status: row.status || 'NEW',
+                          createdAt: row.created_at || new Date().toISOString()
                         };
                         setSearchedBooking(match);
-                        showToast(`✅ Booking ${match.id} found!`);
-                        return;
+                        showToast(`Booking ${match.id} found.`);
+                      } catch (error) {
+                        console.error('Supabase booking tracking failed:', error);
+                        setSearchedBooking(null);
+                        showToast(`Booking search failed: ${error?.message || 'Please try again.'}`);
                       }
-
-                      setSearchedBooking(null);
-                      showToast('❌ No matching booking request found in the database.');
                       return;
                     }
 
-                    // Offline fallback for local development without Supabase.
-                    const match = bookings.find(
-                      (b) =>
-                        String(b.id || '').toLowerCase() === searchValue ||
-                        String(b.mobile || '').replace(/\D/g, '') === rawValue.replace(/\D/g, '')
-                    );
-
+                    const idValue = rawValue.toLowerCase();
+                    const digits = mobileValue.replace(/\D/g, '');
+                    const match = bookings.find(b => String(b.id || '').toLowerCase() === idValue && String(b.mobile || '').replace(/\D/g, '') === digits);
                     if (match) {
                       setSearchedBooking(match);
                       showToast(`Booking ${match.id} found locally.`);
                     } else {
                       setSearchedBooking(null);
-                      showToast('❌ No matching booking request found.');
+                      showToast('No matching booking found in this browser.');
                     }
                   }}
                   className="px-6 py-3 bg-orange-600 hover:bg-orange-700 text-white font-bold text-sm rounded-xl transition"
@@ -1915,7 +2061,7 @@ export default function App() {
                   <div><strong>Travel Date:</strong> {searchedBooking.travelDate} ({searchedBooking.pickupTime})</div>
                   <div><strong>Package:</strong> {searchedBooking.packageName}</div>
                   <div><strong>Vehicle:</strong> {searchedBooking.vehicleName}</div>
-                  <div><strong>Estimated Price:</strong> ₹{searchedBooking.totalPrice?.toLocaleString() || 'Quotation Pending'}</div>
+                  <div><strong>Estimated Price:</strong> â‚¹{searchedBooking.totalPrice?.toLocaleString() || 'Quotation Pending'}</div>
                 </div>
 
                 <div className="flex gap-3">
@@ -1945,7 +2091,7 @@ export default function App() {
                     <div>
                       <span className="text-xs font-bold text-orange-600">{b.id}</span>
                       <h4 className="font-black text-slate-900 text-base">{b.packageName}</h4>
-                      <p className="text-xs text-slate-500">{b.pickup} → {b.destination} | Date: {b.travelDate}</p>
+                      <p className="text-xs text-slate-500">{b.pickup} â†’ {b.destination} | Date: {b.travelDate}</p>
                     </div>
                     <button
                       onClick={() => setSearchedBooking(b)}
@@ -2091,9 +2237,10 @@ export default function App() {
 
                 <button
                   type="submit"
-                  className="w-full py-4 bg-orange-600 hover:bg-orange-700 text-white font-extrabold text-base rounded-2xl shadow-xl shadow-orange-600/30 transition"
+                  disabled={isCustomTripSubmitting}
+                  className="w-full py-4 bg-orange-600 hover:bg-orange-700 text-white font-extrabold text-base rounded-2xl shadow-xl shadow-orange-600/30 transition disabled:opacity-60 disabled:cursor-not-allowed"
                 >
-                  SUBMIT CUSTOM TRIP REQUEST
+                  {isCustomTripSubmitting ? 'SAVING REQUESTâ€¦' : 'SUBMIT CUSTOM TRIP REQUEST'}
                 </button>
               </form>
             </div>
@@ -2126,7 +2273,7 @@ export default function App() {
                       <span>{settings.phone}</span>
                     </a>
                     <a href="mailto:aswaroodatreksandtravels@gmail.com" className="flex items-center gap-3 p-3 bg-slate-50 rounded-xl text-slate-800 font-bold hover:bg-slate-100 transition break-all">
-                      <span className="text-orange-600" aria-hidden="true">✉</span>
+                      <span className="text-orange-600" aria-hidden="true">âœ‰</span>
                       <span>aswaroodatreksandtravels@gmail.com</span>
                     </a>
                     <a href={`https://wa.me/${normalizeWhatsAppNumber(settings.whatsapp)}`} target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 p-3 bg-emerald-50 text-emerald-800 rounded-xl font-bold hover:bg-emerald-100 transition">
@@ -2170,26 +2317,34 @@ export default function App() {
                   <IconShieldCheck className="w-8 h-8" />
                 </div>
                 <h2 className="text-2xl font-black text-slate-900 mb-1">Owner Admin Portal</h2>
-                <p className="text-xs text-slate-500 mb-6">Enter PIN or click quick access to manage trip requests & pricing.</p>
+                <p className="text-xs text-slate-500 mb-6">Sign in with the owner account configured in Supabase Auth.</p>
 
                 <div className="space-y-3">
                   <input
-                    type="password"
-                    placeholder="Enter Admin PIN (Default: 1234)"
-                    value={adminPinInput}
-                    onChange={(e) => setAdminPinInput(e.target.value)}
+                    type="email"
+                    autoComplete="username"
+                    placeholder="Owner email address"
+                    value={adminEmail}
+                    onChange={(e) => setAdminEmail(e.target.value)}
                     className="w-full p-3 bg-slate-50 border border-slate-200 rounded-xl text-center font-bold focus:ring-2 focus:ring-orange-500 focus:outline-none text-sm"
                   />
-
+                  <input
+                    type="password"
+                    autoComplete="current-password"
+                    placeholder="Owner Supabase password"
+                    value={adminPassword}
+                    onChange={(e) => setAdminPassword(e.target.value)}
+                    onKeyDown={(e) => { if (e.key === 'Enter') handleOwnerLogin(); }}
+                    className="w-full p-3 bg-slate-50 border border-slate-200 rounded-xl text-center font-bold focus:ring-2 focus:ring-orange-500 focus:outline-none text-sm"
+                  />
                   <button
-                    onClick={() => {
-                      setIsAdminLoggedIn(true);
-                      showToast('Logged in as Owner/Admin');
-                    }}
-                    className="w-full py-3 bg-slate-900 hover:bg-slate-800 text-white font-bold text-sm rounded-xl transition"
+                    onClick={handleOwnerLogin}
+                    disabled={adminAuthLoading}
+                    className="w-full py-3 bg-slate-900 hover:bg-slate-800 disabled:opacity-60 text-white font-bold text-sm rounded-xl transition"
                   >
-                    ACCESS DASHBOARD
+                    {adminAuthLoading ? 'SIGNING INâ€¦' : 'SIGN IN AS OWNER'}
                   </button>
+                  {!supabaseConfigured && <p className="text-xs text-rose-600">Supabase environment variables are missing. Add them to .env and restart npm run dev.</p>}
                 </div>
               </div>
             ) : (
@@ -2222,7 +2377,7 @@ export default function App() {
                     ))}
 
                     <button
-                      onClick={() => setIsAdminLoggedIn(false)}
+                      onClick={handleOwnerLogout}
                       className="px-3.5 py-2 bg-rose-600 hover:bg-rose-700 text-white text-xs font-bold rounded-xl"
                     >
                       Logout
@@ -2231,7 +2386,7 @@ export default function App() {
                 </div>
 
                 <div className="mb-5 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 bg-slate-900 text-white rounded-2xl p-4">
-                  <div><div className="font-bold text-sm">Owner Notifications</div><div className="text-[11px] text-slate-300">{notifications.filter(n => n.unread).length} unread · Browser permission: {notificationPermission}</div></div>
+                  <div><div className="font-bold text-sm">Owner Notifications</div><div className="text-[11px] text-slate-300">{notifications.filter(n => n.unread).length} unread Â· Browser permission: {notificationPermission}</div></div>
                   <div className="flex gap-2"><button onClick={enableBrowserNotifications} className="px-3 py-2 bg-amber-500 text-slate-950 rounded-lg text-xs font-extrabold">Enable Chrome Notifications</button><button onClick={() => setNotifications(prev => prev.map(n => ({...n,unread:false})))} className="px-3 py-2 bg-slate-800 rounded-lg text-xs font-bold">Mark Read</button></div>
                 </div>
 
@@ -2288,11 +2443,11 @@ export default function App() {
                                 <div className="text-[11px] text-slate-500">{b.vehicleName} ({b.travellers} Pax)</div>
                               </td>
                               <td className="p-4">
-                                <div>{b.pickup} → {b.destination}</div>
+                                <div>{b.pickup} â†’ {b.destination}</div>
                                 <div className="text-[11px] text-slate-500">{b.travelDate} @ {b.pickupTime}</div>
                               </td>
                               <td className="p-4 font-black text-slate-900">
-                                ₹{b.totalPrice ? b.totalPrice.toLocaleString() : 'Pending'}
+                                â‚¹{b.totalPrice ? b.totalPrice.toLocaleString() : 'Pending'}
                               </td>
                               <td className="p-4 min-w-[280px]">
                                 <div className="flex flex-nowrap items-center justify-center gap-2 whitespace-nowrap">
@@ -2336,7 +2491,7 @@ export default function App() {
                     <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-3">
                       <div>
                         <h2 className="text-xl font-extrabold text-slate-900">Manage Travel Packages</h2>
-                        <p className="text-xs text-slate-500 mt-1">Add complete package details. Customers will see saved changes immediately in this browser.</p>
+                        <p className="text-xs text-slate-500 mt-1">Add complete package details. Saved changes sync through Supabase to all visitors.</p>
                       </div>
                       <button onClick={() => openPackageEditor()} className="px-4 py-2.5 bg-orange-600 hover:bg-orange-700 text-white text-xs font-extrabold rounded-xl">+ Add New Package</button>
                     </div>
@@ -2348,13 +2503,13 @@ export default function App() {
                           <div className="p-4">
                             <div className="flex justify-between gap-3">
                               <div><h3 className="font-extrabold text-slate-900">{p.name}</h3><p className="text-xs text-slate-500 mt-1">{p.route}</p></div>
-                              <span className="shrink-0 text-sm font-black text-orange-600">₹{Number(p.startingPrice || 0).toLocaleString()}</span>
+                              <span className="shrink-0 text-sm font-black text-orange-600">â‚¹{Number(p.startingPrice || 0).toLocaleString()}</span>
                             </div>
                             <p className="text-xs text-slate-600 mt-3 line-clamp-2">{p.description}</p>
                             <div className="flex flex-wrap gap-2 mt-4">
                               <button onClick={() => setPackageDetailModal(p)} className="px-3 py-2 bg-white border border-slate-200 rounded-lg text-xs font-bold">View</button>
                               <button onClick={() => openPackageEditor(p)} className="px-3 py-2 bg-amber-100 text-amber-800 rounded-lg text-xs font-bold">Edit Details</button>
-                              <button onClick={() => { if (window.confirm(`Delete ${p.name}?`)) { setPackages(prev => prev.filter(x => x.id !== p.id)); showToast(`Deleted ${p.name}`); } }} className="px-3 py-2 bg-rose-50 text-rose-600 rounded-lg text-xs font-bold">Delete</button>
+                              <button onClick={() => deletePackage(p)} className="px-3 py-2 bg-rose-50 text-rose-600 rounded-lg text-xs font-bold">Delete</button>
                             </div>
                           </div>
                         </div>
@@ -2387,8 +2542,8 @@ export default function App() {
                           </div>
                           <div className="p-5">
                             <div className="flex items-start justify-between gap-3">
-                              <div><h3 className="font-black text-slate-900">{v.name}</h3><p className="text-xs text-slate-500 mt-1">{v.type || 'Vehicle'} · {v.capacity}</p></div>
-                              <div className="text-right"><div className="text-lg font-black text-orange-600">₹{Number(v.startPrice || 0).toLocaleString()}</div><div className="text-[10px] text-slate-400">starting price</div></div>
+                              <div><h3 className="font-black text-slate-900">{v.name}</h3><p className="text-xs text-slate-500 mt-1">{v.type || 'Vehicle'} Â· {v.capacity}</p></div>
+                              <div className="text-right"><div className="text-lg font-black text-orange-600">â‚¹{Number(v.startPrice || 0).toLocaleString()}</div><div className="text-[10px] text-slate-400">starting price</div></div>
                             </div>
                             <div className="grid grid-cols-2 gap-2 mt-4 text-[11px]">
                               <div className="bg-slate-50 rounded-xl p-3"><b>AC</b><br/>{v.ac ? 'Yes' : 'No'}</div>
@@ -2413,8 +2568,8 @@ export default function App() {
                             <div><label className="label">Vehicle Name *</label><input value={vehicleForm.name} onChange={e=>setVehicleForm({...vehicleForm,name:e.target.value})} className="input" placeholder="Innova Crysta" /></div>
                             <div><label className="label">Type</label><select value={vehicleForm.type} onChange={e=>setVehicleForm({...vehicleForm,type:e.target.value})} className="input"><option>Sedan</option><option>SUV</option><option>MPV</option><option>Tempo Traveller</option><option>Bus</option></select></div>
                             <div><label className="label">Capacity</label><input value={vehicleForm.capacity} onChange={e=>setVehicleForm({...vehicleForm,capacity:e.target.value})} className="input" placeholder="7+1 Passengers" /></div>
-                            <div><label className="label">Starting Price ₹</label><input type="number" value={vehicleForm.startPrice} onChange={e=>setVehicleForm({...vehicleForm,startPrice:e.target.value})} className="input" /></div>
-                            <div><label className="label">Rate / KM</label><input value={vehicleForm.pricePerKm} onChange={e=>setVehicleForm({...vehicleForm,pricePerKm:e.target.value})} className="input" placeholder="₹22/km" /></div>
+                            <div><label className="label">Starting Price â‚¹</label><input type="number" value={vehicleForm.startPrice} onChange={e=>setVehicleForm({...vehicleForm,startPrice:e.target.value})} className="input" /></div>
+                            <div><label className="label">Rate / KM</label><input value={vehicleForm.pricePerKm} onChange={e=>setVehicleForm({...vehicleForm,pricePerKm:e.target.value})} className="input" placeholder="â‚¹22/km" /></div>
                             <div><label className="label">Status</label><select value={vehicleForm.status} onChange={e=>setVehicleForm({...vehicleForm,status:e.target.value})} className="input"><option value="AVAILABLE">AVAILABLE</option><option value="BOOKED">BOOKED</option><option value="MAINTENANCE">MAINTENANCE</option><option value="INACTIVE">INACTIVE</option></select></div>
                             <div><label className="label">Registration Number</label><input value={vehicleForm.registrationNumber} onChange={e=>setVehicleForm({...vehicleForm,registrationNumber:e.target.value})} className="input" placeholder="AP00 XX 0000" /></div>
                             <div><label className="label">Driver Name</label><input value={vehicleForm.driverName} onChange={e=>setVehicleForm({...vehicleForm,driverName:e.target.value})} className="input" /></div>
@@ -2477,7 +2632,7 @@ export default function App() {
                     </div>
 
                     <button
-                      onClick={() => showToast('Saved Business Settings!')}
+                      onClick={saveBusinessSettings}
                       className="w-full py-3 bg-orange-600 hover:bg-orange-700 text-white font-bold text-sm rounded-xl transition"
                     >
                       SAVE BUSINESS SETTINGS
@@ -2644,6 +2799,25 @@ END $$;`}
                 </div>
               </div>
 
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                <div>
+                  <label className="block text-xs font-bold text-slate-700 mb-1">Pickup Location *</label>
+                  <input type="text" required value={formData.pickup} onChange={(e) => setFormData({ ...formData, pickup: e.target.value })} placeholder="Hotel / railway station / address" className="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm font-semibold" />
+                </div>
+                <div>
+                  <label className="block text-xs font-bold text-slate-700 mb-1">Destination *</label>
+                  <input type="text" required value={formData.destination} onChange={(e) => setFormData({ ...formData, destination: e.target.value })} placeholder="Where are you going?" className="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm font-semibold" />
+                </div>
+                <div>
+                  <label className="block text-xs font-bold text-slate-700 mb-1">Travel Date *</label>
+                  <input type="date" required min={new Date().toISOString().split('T')[0]} value={formData.travelDate} onChange={(e) => setFormData({ ...formData, travelDate: e.target.value })} className="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm font-semibold" />
+                </div>
+                <div>
+                  <label className="block text-xs font-bold text-slate-700 mb-1">Travellers *</label>
+                  <input type="number" min="1" max="60" required value={formData.travellers} onChange={(e) => setFormData({ ...formData, travellers: Math.max(1, Number(e.target.value || 1)) })} className="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm font-semibold" />
+                </div>
+              </div>
+
               <div>
                 <label className="block text-xs font-bold text-slate-700 mb-1">Selected Vehicle Choice</label>
                 <select
@@ -2664,15 +2838,16 @@ END $$;`}
                 </div>
                 <div className="flex justify-between">
                   <span className="text-slate-500">Estimated Fare:</span>
-                  <span className="font-extrabold text-orange-600">₹{formData.price.toLocaleString()}</span>
+                  <span className="font-extrabold text-orange-600">â‚¹{formData.price.toLocaleString()}</span>
                 </div>
               </div>
 
               <button
                 type="submit"
-                className="w-full py-3.5 bg-orange-600 hover:bg-orange-700 text-white font-extrabold text-sm rounded-xl shadow-lg shadow-orange-600/30 transition"
+                disabled={isBookingSubmitting}
+                className="w-full py-3.5 bg-orange-600 hover:bg-orange-700 text-white font-extrabold text-sm rounded-xl shadow-lg shadow-orange-600/30 transition disabled:opacity-60 disabled:cursor-not-allowed"
               >
-                SUBMIT TRIP REQUEST NOW
+                {isBookingSubmitting ? 'SAVING BOOKINGâ€¦' : 'SUBMIT TRIP REQUEST NOW'}
               </button>
             </form>
           </div>
@@ -2827,7 +3002,7 @@ END $$;`}
         </div>
 
         <div className="border-t border-slate-900 text-center text-[11px] text-slate-500 py-4">
-          © 2026 ASWAROODA TREKS & TRAVELS. All Rights Reserved. General Travel & Cab Booking Services.
+          Â© 2026 ASWAROODA TREKS & TRAVELS. All Rights Reserved. General Travel & Cab Booking Services.
         </div>
       </footer>
 
